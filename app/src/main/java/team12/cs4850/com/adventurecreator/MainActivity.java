@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
                                 //.setTheme(R.style.MySuperAppTheme)      // Set theme
                                 .build(),
                         RC_SIGN_IN);
-
                 break;
             case R.id.btnTest2:
                 FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -68,7 +67,10 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                // ...
+
+                //start event page if successfully signed in
+                Intent eventPage = new Intent(MainActivity.this, EventActivity.class);
+                startActivity(eventPage);
             } else {
                 // Sign in failed, check response for error code
                 // ...
