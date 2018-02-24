@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "456926876618",
+    "firebase_url": "https://alexa-adventure-creator-ca7c9.firebaseio.com",
+    "project_id": "alexa-adventure-creator-ca7c9",
+    "storage_bucket": "alexa-adventure-creator-ca7c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456926876618:android:0905510ee538ff6e",
+        "android_client_info": {
+          "package_name": "team12.cs4850.com.adventurecreator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "456926876618-m8h9tq7huho07dv3ksflrr0ll6tn9tvk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "team12.cs4850.com.adventurecreator",
+            "certificate_hash": "217a375a5c7efcb42b3495bb7aac72916f5e8476"
+          }
+        },
+        {
+          "client_id": "456926876618-c73ai0kr3bvlfopnqmnmuvo57tg9epq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0V4zt9REdQqbnOgmmKVHkgulfIPkxIj0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "456926876618-c73ai0kr3bvlfopnqmnmuvo57tg9epq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
