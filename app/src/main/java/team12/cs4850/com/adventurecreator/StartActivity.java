@@ -49,6 +49,13 @@ public class StartActivity extends MyBaseActivity {
     @Override
     public void onStart() {
         super.onStart();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            startActivity(new Intent(getBaseContext(), MainActivity.class));
+            finish();
+
+        }
     }
 
     public void btnClick(View view) {
@@ -65,8 +72,6 @@ public class StartActivity extends MyBaseActivity {
                                 .build(),
                         RC_SIGN_IN);
                 break;
-            case R.id.btnRegister:
-                break;
         }
     }
 
@@ -79,28 +84,16 @@ public class StartActivity extends MyBaseActivity {
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 //start event page if successfully signed in
-                Intent eventPage = new Intent(this, EventActivity.class);
-                startActivity(eventPage);
+                startActivity(new Intent(getBaseContext(), MainActivity.class));
+                finish();
             } else {
                 // Sign in failed, check response for error code
                 // ...
             }
         }
     }
-
-    public void signout() {
-        AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // ...
-                    }
-                });
-    }
-
-
 
 }

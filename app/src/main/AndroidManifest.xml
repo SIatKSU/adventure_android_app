@@ -10,15 +10,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".StartActivity">
+        <activity android:name=".StartActivity"
+         android:launchMode="singleTask"
+         android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+         android:label="@string/MainActivity"
+         android:launchMode="singleTask"
+         android:parentActivityName=".StartActivity"
+         android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name=".EventActivity" />
         <activity android:name=".NewEventActivity" />

@@ -4,7 +4,12 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -16,69 +21,85 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends MyBaseActivity implements FirebaseAuth.AuthStateListener {
 
-    private static final int RC_SIGN_IN = 123;
-
-    // Choose authentication providers
-    List<AuthUI.IdpConfig> providers = Arrays.asList(
-            new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build());
-            //new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
-            //new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
-            //new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
-            //new AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build());
+    private TextView tvLoggedInAs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        tvLoggedInAs = findViewById(R.id.tvUsername);
     }
 
-    public void btnClick(View view) {
-        Intent returnIntent;
-        switch (view.getId()) {
-            case R.id.btnTest1:
-                // Create and launch sign-in intent
-                startActivityForResult(
-                        AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setAvailableProviders(providers)
-                                .setLogo(R.drawable.dice20)      // Set logo drawable
-                                //.setTheme(R.style.MySuperAppTheme)      // Set theme
-                                .build(),
-                        RC_SIGN_IN);
-                break;
-            case R.id.btnTest2:
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch (item.getItemId()) {
+            case R.id.action_signout:
                 FirebaseAuth auth = FirebaseAuth.getInstance();
-                if (auth.getCurrentUser() != null) {
-                    signout();
+                FirebaseUser user = auth.getCurrentUser();
+                if (user != null) {
+                    auth.signOut();
+                    //signOut();
                 }
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseAuth.getInstance().addAuthStateListener(this);
+
+        if (isSignedIn()) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onStop() {
+        super.onStop();
+        FirebaseAuth.getInstance().removeAuthStateListener(this);
+    }
 
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth auth) {
+        //mSendButton.setEnabled(isSignedIn());
+        //mMessageEdit.setEnabled(isSignedIn());
 
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                //start event page if successfully signed in
-                Intent eventPage = new Intent(MainActivity.this, EventActivity.class);
-                startActivity(eventPage);
-            } else {
-                // Sign in failed, check response for error code
-                // ...
-            }
+        if (isSignedIn()) {
+            //attachRecyclerViewAdapter();
+        }
+        else {
+            startActivity(new Intent(getBaseContext(), StartActivity.class));
+            finish();
+            //Toast.makeText(this, R.string.signing_in, Toast.LENGTH_SHORT).show();
+            //auth.signInAnonymously().addOnCompleteListener(new SignInResultNotifier(this));
         }
     }
 
-    public void signout() {
+    private boolean isSignedIn() {
+        return FirebaseAuth.getInstance().getCurrentUser() != null;
+    }
+
+    public void signOut() {
         AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -89,4 +110,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void btnClick(View view) {
+        switch (view.getId()) {
+
+        }
+    }
 }

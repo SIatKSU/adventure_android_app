@@ -13,7 +13,10 @@
     <!--******************** Login Screen Strings ******************-->
 
     <string name="SignIn">Sign In</string>
-    <string name="Register">Register</string>
+    <string name="LoggedInAs">Logged in as: </string>
+    <string name="CreateAdventure">Create Adventure</string>
+    <string name="ListAdventures">List Adventures</string>
+
 
     <string-array name="pref_example_list_values">
         <item>1</item>
@@ -22,4 +25,6 @@
     </string-array>
 
 
+    <string name="MainActivity">Main Page</string>
+    <string name="action_signout">Sign Out</string>
 </resources>
