@@ -1,17 +1,12 @@
 package team12.cs4850.com.adventurecreator;
 
 import android.content.Intent;
-import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -47,12 +42,17 @@ public class StartActivity extends MyBaseActivity {
     }*/
 
     @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth auth) {
+        //do NOT respond to authstate changes.
+    }
+
+
+    @Override
     public void onStart() {
         super.onStart();
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            startActivity(new Intent(getBaseContext(), MainActivity.class));
+            startActivity(new Intent(getBaseContext(), PostLoginActivity.class));
             finish();
 
         }
@@ -87,7 +87,7 @@ public class StartActivity extends MyBaseActivity {
                 //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 //start event page if successfully signed in
-                startActivity(new Intent(getBaseContext(), MainActivity.class));
+                startActivity(new Intent(getBaseContext(), PostLoginActivity.class));
                 finish();
             } else {
                 // Sign in failed, check response for error code

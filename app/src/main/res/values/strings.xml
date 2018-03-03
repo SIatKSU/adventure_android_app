@@ -13,7 +13,7 @@
     <!--******************** Login Screen Strings ******************-->
 
     <string name="SignIn">Sign In</string>
-    <string name="LoggedInAs">Logged in as: </string>
+    <string name="LoggedInAs">Logged in as:\u0020</string>
     <string name="CreateAdventure">Create Adventure</string>
     <string name="ListAdventures">List Adventures</string>
 
@@ -25,6 +25,15 @@
     </string-array>
 
 
-    <string name="MainActivity">Main Page</string>
+    <string name="PostLoginActivity">Adventure Creator</string>
     <string name="action_signout">Sign Out</string>
+
+    <string name="SetupProfileTitle">Setup User Profile</string>
+    <string name="Name">Name</string>
+    <string name="NameHint">Enter Name</string>
+    <string name="Password">Password</string>
+    <string name="LinkToAmazonAccount">Link to Amazon Account</string>
+    <string name="AmazonAccountHint">Enter Amazon email address</string>
+    <string name="Save">Save</string>
+    <string name="AdventureListTitle">Adventure Creator</string>
 </resources>

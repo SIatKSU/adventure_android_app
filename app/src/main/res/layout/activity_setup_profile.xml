@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="team12.cs4850.com.adventurecreator.SetupProfileActivity">
+
+    <include layout="@layout/mytoolbar" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/configPackLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:padding="10dp">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineH1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineV1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.17" />
+
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="4dp"
+            android:text="@string/LoggedInAs"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tvNameLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="4dp"
+            android:text="@string/Name"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/guidelineV1"
+            />
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#f0f0f0"
+            android:inputType="textPersonName"
+            android:lines="1"
+            android:textSize="24sp"
+            android:paddingLeft="4dp"
+            android:hint="@string/NameHint"
+            android:scrollbars="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/tvNameLabel" />
+
+        <TextView
+            android:id="@+id/tvAmazonEmailAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="4dp"
+            android:text="@string/LinkToAmazonAccount"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/etName"
+            />
+
+        <EditText
+            android:id="@+id/etAmazonEmailAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#f0f0f0"
+            android:inputType="textEmailAddress"
+            android:lines="1"
+            android:textSize="24sp"
+            android:paddingLeft="4dp"
+            android:hint="@string/AmazonAccountHint"
+            android:scrollbars="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/tvAmazonEmailAccount" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="btnClick"
+            android:text="@string/Save"
+            android:textSize="18sp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnCancel"
+            app:layout_constraintHorizontal_bias="0.5"/>
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="btnClick"
+            android:text="@android:string/cancel"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="@+id/btnSave"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSave"
+            app:layout_constraintStart_toEndOf="@+id/btnSave"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" />
+
+
+
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>

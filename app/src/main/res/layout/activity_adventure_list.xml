@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="team12.cs4850.com.adventurecreator.MainActivity">
+    tools:context="team12.cs4850.com.adventurecreator.AdventureListActivity">
 
     <include layout="@layout/mytoolbar" />
 
@@ -86,6 +86,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guidelineV1" />
 
+
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>
-

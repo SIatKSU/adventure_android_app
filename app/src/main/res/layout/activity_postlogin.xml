@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="team12.cs4850.com.adventurecreator.PostLoginActivity">
+
+    <include layout="@layout/mytoolbar" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/configPackLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:padding="10dp">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineH1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineV1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.24" />
+
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="4dp"
+            android:text="@string/LoggedInAs"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+
+        <Button
+            android:id="@+id/btnSetupProfile"
+            android:layout_width="0dp"
+            android:layout_height="67dp"
+            android:text="@string/SetupProfileTitle"
+            android:layout_marginTop="10dp"
+            android:onClick="btnClick"
+            app:layout_constraintTop_toBottomOf="@+id/tvUsername"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+        <Button
+            android:id="@+id/btnAdventureCreator"
+            android:layout_width="0dp"
+            android:layout_height="67dp"
+            android:text="@string/AdventureListTitle"
+            android:layout_marginTop="10dp"
+            android:onClick="btnClick"
+            app:layout_constraintTop_toBottomOf="@+id/btnSetupProfile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+
+
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>
+

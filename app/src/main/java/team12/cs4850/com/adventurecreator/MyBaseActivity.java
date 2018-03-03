@@ -1,16 +1,23 @@
 package team12.cs4850.com.adventurecreator;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+
 
 //based on https://stackoverflow.com/questions/32367041/calling-toolbar-on-each-activity
 
-public abstract class MyBaseActivity extends AppCompatActivity {
+public abstract class MyBaseActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener  {
 
     protected Toolbar toolbar;
     protected MenuItem actionBluetooth;
@@ -26,15 +33,6 @@ public abstract class MyBaseActivity extends AppCompatActivity {
 
         setContentView(getLayoutResource());
         configureToolbar();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        //invalidateOptionsMenu();    //so onPrepareOptionsMenu is called
-        //updateStatus();
-
     }
 
     protected abstract int getLayoutResource();
@@ -86,6 +84,9 @@ public abstract class MyBaseActivity extends AppCompatActivity {
     //protected void updateStatus(String statusString) {
     //}
 
+    protected boolean isSignedIn() {
+        return FirebaseAuth.getInstance().getCurrentUser() != null;
+    }
 
     private void configureToolbar() {
         toolbar = findViewById(R.id.my_toolbar);
@@ -97,6 +98,48 @@ public abstract class MyBaseActivity extends AppCompatActivity {
             //ab.setDisplayHomeAsUpEnabled(true);
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseAuth.getInstance().addAuthStateListener(this);
+        //invalidateOptionsMenu();    //so onPrepareOptionsMenu is called
+        //updateStatus();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseAuth.getInstance().removeAuthStateListener(this);
+    }
+
+
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth auth) {
+        //mSendButton.setEnabled(isSignedIn());
+        //mMessageEdit.setEnabled(isSignedIn());
+
+        if (isSignedIn()) {
+            //attachRecyclerViewAdapter();
+        }
+        else {
+            startActivity(new Intent(getBaseContext(), StartActivity.class));
+            finish();
+            //Toast.makeText(this, R.string.signing_in, Toast.LENGTH_SHORT).show();
+            //auth.signInAnonymously().addOnCompleteListener(new SignInResultNotifier(this));
+        }
+    }
+
+    protected void signOut() {
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                    }
+                });
+    }
+
 
 }
 
