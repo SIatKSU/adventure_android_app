@@ -47,6 +47,8 @@
     <string name="AdventureDescription">Description</string>
     <string name="AdventureDescriptionHint">Enter Adventure Description Here</string>
 
+    <string name="ListOfAdventures">Your Adventures:</string>
+
 
 
 </resources>

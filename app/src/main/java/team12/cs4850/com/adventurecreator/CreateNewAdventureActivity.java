@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 public class CreateNewAdventureActivity extends MyBaseActivity {
 
@@ -77,13 +78,30 @@ public class CreateNewAdventureActivity extends MyBaseActivity {
                     mAdventureName.setError("Required.");
                     mAdventureName.clearFocus();
                     mAdventureName.requestFocus();
-                    //valid = false;
                 }
                 else {
                     mAdventureName.setError(null);
+
+                    String adventureDescription = mAdventureDescription.getText().toString().trim();
+                    if (TextUtils.isEmpty(adventureDescription)) {
+                        mAdventureDescription.setError("Required.");
+                        mAdventureDescription.clearFocus();
+                        mAdventureDescription.requestFocus();
+                    }
+
+                    else {
+
+                        mAdventureDescription.setError(null);
+
+                        //need to check if adventureName is duplicate
+                        ZAdventure newAdventure = new ZAdventure(auth.getUid(), adventureName, adventureDescription);
+                        mDatabase.child("adventures").child(adventureName).setValue(newAdventure);
+                        mDatabase.child("users").child(auth.getUid()).child("myAdventures").child(adventureName).setValue(true);
+                        //String key = newDatabaseReference.getKey();
+                        finish();
+                    }
                 }
 
-                //finish();
                 break;
         }
     }

@@ -42,7 +42,6 @@ public class PostLoginActivity extends MyBaseActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_signout:
-                FirebaseAuth auth = FirebaseAuth.getInstance();
                 FirebaseUser user = auth.getCurrentUser();
                 if (user != null) {
                     auth.signOut();
@@ -59,7 +58,7 @@ public class PostLoginActivity extends MyBaseActivity {
     public void onStart() {
         super.onStart();
         if (isSignedIn()) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseUser user = auth.getCurrentUser();
             tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
         }
     }

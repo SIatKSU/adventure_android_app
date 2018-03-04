@@ -26,8 +26,19 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    //firebase ui
-    compile 'com.firebaseui:firebase-ui-auth:3.1.0'
+    // FirebaseUI for Firebase Realtime Database
+    implementation 'com.firebaseui:firebase-ui-database:3.2.2'
+    // FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:3.2.2'
+    // need line below because: https://github.com/firebase/FirebaseUI-Android/issues/1033
+    implementation "com.google.firebase:firebase-database:11.8.0"
+
+    // FirebaseUI for Cloud Firestore
+    //implementation 'com.firebaseui:firebase-ui-firestore:3.2.2'
+
+    // FirebaseUI for Cloud Storage
+    //implementation 'com.firebaseui:firebase-ui-storage:3.2.2'
+
     //firebase ui Required only if Facebook login support is required
     //compile('com.facebook.android:facebook-android-sdk:4.27.0')
 

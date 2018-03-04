@@ -50,7 +50,7 @@ public class StartActivity extends MyBaseActivity {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
             startActivity(new Intent(getBaseContext(), PostLoginActivity.class));
             finish();

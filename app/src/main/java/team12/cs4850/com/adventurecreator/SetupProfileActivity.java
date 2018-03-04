@@ -57,7 +57,7 @@ public class SetupProfileActivity extends MyBaseActivity {
     public void onStart() {
         super.onStart();
         if (isSignedIn()) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseUser user = auth.getCurrentUser();
             tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
             etName.setText(user.getDisplayName());
         }

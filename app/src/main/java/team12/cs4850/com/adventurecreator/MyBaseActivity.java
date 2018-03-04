@@ -13,6 +13,8 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 //based on https://stackoverflow.com/questions/32367041/calling-toolbar-on-each-activity
@@ -20,7 +22,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public abstract class MyBaseActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener  {
 
     protected Toolbar toolbar;
-    protected MenuItem actionBluetooth;
+
+    protected DatabaseReference mDatabase;
+    protected FirebaseAuth auth;
 
     //protected static boolean startingUpSoConnectSilently = false;
 
@@ -33,6 +37,9 @@ public abstract class MyBaseActivity extends AppCompatActivity implements Fireba
 
         setContentView(getLayoutResource());
         configureToolbar();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        auth = FirebaseAuth.getInstance();
     }
 
     protected abstract int getLayoutResource();
@@ -85,7 +92,7 @@ public abstract class MyBaseActivity extends AppCompatActivity implements Fireba
     //}
 
     protected boolean isSignedIn() {
-        return FirebaseAuth.getInstance().getCurrentUser() != null;
+        return auth.getCurrentUser() != null;
     }
 
     private void configureToolbar() {
@@ -102,7 +109,7 @@ public abstract class MyBaseActivity extends AppCompatActivity implements Fireba
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseAuth.getInstance().addAuthStateListener(this);
+        auth.addAuthStateListener(this);
         //invalidateOptionsMenu();    //so onPrepareOptionsMenu is called
         //updateStatus();
     }
@@ -110,7 +117,7 @@ public abstract class MyBaseActivity extends AppCompatActivity implements Fireba
     @Override
     protected void onStop() {
         super.onStop();
-        FirebaseAuth.getInstance().removeAuthStateListener(this);
+        auth.removeAuthStateListener(this);
     }
 
 
