@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="team12.cs4850.com.adventurecreator.CreateNewAdventureActivity">
+
+    <include layout="@layout/mytoolbar" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/configPackLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:padding="10dp">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineH1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineV1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.24" />
+
+         <TextView
+            android:id="@+id/tvAdventureNameLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="4dp"
+            android:text="@string/AdventureName"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <EditText
+            android:id="@+id/etAdventureName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#f0f0f0"
+            android:inputType="textNoSuggestions"
+            android:lines="1"
+            android:maxLength="32"
+            android:nextFocusDown="@+id/etAdventureDescription"
+            android:textSize="24sp"
+            android:paddingLeft="4dp"
+            android:hint="@string/AdventureNameHint"
+            app:layout_constraintTop_toBottomOf="@+id/tvAdventureNameLabel" />
+
+        <TextView
+            android:id="@+id/tvAdventureDescriptionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="4dp"
+            android:text="@string/AdventureDescription"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/etAdventureName"
+            />
+
+        <EditText
+            android:id="@+id/etAdventureDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#f0f0f0"
+            android:inputType="textMultiLine|text"
+            android:lines="3"
+            android:nextFocusDown="@+id/btnSave"
+            android:textSize="24sp"
+            android:paddingLeft="4dp"
+            android:hint="@string/AdventureDescriptionHint"
+            android:scrollbars="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/tvAdventureDescriptionLabel" />
+
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="btnClick"
+            android:text="@string/Save"
+            android:textSize="18sp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnCancel"
+            app:layout_constraintHorizontal_bias="0.5"/>
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="btnClick"
+            android:text="@android:string/cancel"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="@+id/btnSave"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSave"
+            app:layout_constraintStart_toEndOf="@+id/btnSave"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" />
+
+
+
+
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>
+

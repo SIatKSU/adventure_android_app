@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
@@ -15,19 +17,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class AdventureListActivity extends MyBaseActivity {
+public class CreateNewAdventureActivity extends MyBaseActivity {
 
-    private TextView tvLoggedInAs;
+    private EditText mAdventureName, mAdventureDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tvLoggedInAs = findViewById(R.id.tvUsername);
+        mAdventureName = findViewById(R.id.etAdventureName);
+        mAdventureDescription = findViewById(R.id.etAdventureDescription);
     }
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_adventure_list;
+        return R.layout.activity_create_new_adventure;
     }
 
     @Override
@@ -54,8 +57,7 @@ public class AdventureListActivity extends MyBaseActivity {
     public void onStart() {
         super.onStart();
         if (isSignedIn()) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
+            //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         }
     }
 
@@ -66,12 +68,22 @@ public class AdventureListActivity extends MyBaseActivity {
 
     public void btnClick(View view) {
         switch (view.getId()) {
-            case R.id.btnNew:
-                startActivity(new Intent(AdventureListActivity.this, CreateNewAdventureActivity.class));
+            case R.id.btnCancel:
+                finish();
                 break;
-            case R.id.btnEdit:
-                break;
-            case R.id.btnDelete:
+            case R.id.btnSave:
+                String adventureName = mAdventureName.getText().toString().trim();
+                if (TextUtils.isEmpty(adventureName)) {
+                    mAdventureName.setError("Required.");
+                    mAdventureName.clearFocus();
+                    mAdventureName.requestFocus();
+                    //valid = false;
+                }
+                else {
+                    mAdventureName.setError(null);
+                }
+
+                //finish();
                 break;
         }
     }

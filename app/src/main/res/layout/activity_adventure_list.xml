@@ -24,11 +24,19 @@
             app:layout_constraintGuide_percent="0.5" />
 
         <android.support.constraint.Guideline
+            android:id="@+id/guidelineV0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.09" />
+
+
+        <android.support.constraint.Guideline
             android:id="@+id/guidelineV1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.24" />
+            app:layout_constraintGuide_percent="0.22" />
 
         <TextView
             android:id="@+id/tvUsername"
@@ -39,52 +47,60 @@
             android:paddingTop="4dp"
             android:text="@string/LoggedInAs"
             android:textSize="18sp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            />
-
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btnCreateAdventure"
+            android:id="@+id/btnNew"
             android:layout_width="0dp"
-            android:layout_height="67dp"
-            android:text="@string/CreateAdventure"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/tvUsername"
+            android:layout_height="wrap_content"
+            android:onClick="btnClick"
+            android:text="@string/New"
+            android:textSize="18sp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/guidelineV0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/guidelineH1"
-            />
+            app:layout_constraintEnd_toStartOf="@+id/btnEdit"
+            app:layout_constraintHorizontal_bias="0.5"/>
 
-        <EditText
-            android:id="@+id/etAdventureName"
+        <Button
+            android:id="@+id/btnEdit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="#f0f0f0"
-            android:ems="10"
-            android:inputType="text"
-            android:lines="1"
-            android:paddingStart="4dp"
-            android:hint="Enter Unique Name"
-            app:layout_constraintStart_toStartOf="@+id/guidelineH1"
+            android:onClick="btnClick"
+            android:text="@string/Edit"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="@+id/btnNew"
+            app:layout_constraintBottom_toBottomOf="@+id/btnNew"
+            app:layout_constraintStart_toEndOf="@+id/btnNew"
+            app:layout_constraintEnd_toStartOf="@+id/btnDelete"
+            app:layout_constraintHorizontal_bias="0.5" />
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="btnClick"
+            android:text="@string/Delete"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="@+id/btnNew"
+            app:layout_constraintBottom_toBottomOf="@+id/btnNew"
+            app:layout_constraintStart_toEndOf="@+id/btnEdit"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btnCreateAdventure" />
+            app:layout_constraintHorizontal_bias="0.5" />
 
-        <EditText
-            android:id="@+id/etAdventureDescription"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mAdventureList"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="#f0f0f0"
-            android:ems="10"
-            android:inputType="textMultiLine|textPersonName"
-            android:lines="3"
-            android:paddingStart="4dp"
-            android:hint="Enter Adventure Description"
+            android:layout_height="0dp"
+            android:background="@drawable/rectangleborder"
             android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guidelineV1" />
+            app:layout_constraintTop_toTopOf="@id/guidelineV1"
+            tools:listitem="@layout/adventure_list_item"
+            />
 
 
     </android.support.constraint.ConstraintLayout>
