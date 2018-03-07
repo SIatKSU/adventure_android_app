@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class EditOrCreateAdventureActivity extends MyBaseActivity {
 
@@ -59,7 +58,7 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_create_new_adventure;
+        return R.layout.activity_edit_or_create_adventure;
     }
 
     @Override

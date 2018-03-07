@@ -1,5 +1,7 @@
 package team12.cs4850.com.adventurecreator;
 
+import java.util.List;
+
 /**
  * Created by siatk on 3/3/2018.
  */
@@ -12,6 +14,8 @@ public class ZAdventure {
     public String adventureDescription;
     public long dateModified;    //long currDate = System.currentTimeMillis();     //use mDate = Date(currDate) to get it back.
     public int adventureType;
+
+    public List<ZEvent> events = null;
 
 
     public ZAdventure() {
