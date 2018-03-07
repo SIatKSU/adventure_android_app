@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,7 +13,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 
 //based on https://stackoverflow.com/questions/32367041/calling-toolbar-on-each-activity
 
@@ -25,6 +22,8 @@ public abstract class MyBaseActivity extends AppCompatActivity implements Fireba
 
     protected DatabaseReference mDatabase;
     protected FirebaseAuth auth;
+
+    static ZAdventure currAdventure;
 
     //protected static boolean startingUpSoConnectSilently = false;
 

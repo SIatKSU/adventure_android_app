@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="team12.cs4850.com.adventurecreator.CreateNewAdventureActivity">
+    tools:context="team12.cs4850.com.adventurecreator.EditOrCreateAdventureActivity">
 
     <include layout="@layout/mytoolbar" />
 
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:background="#f0f0f0"
-            android:inputType="textNoSuggestions"
+            android:inputType="textCapWords"
             android:lines="1"
             android:maxLength="32"
             android:nextFocusDown="@+id/etAdventureDescription"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:background="#f0f0f0"
-            android:inputType="textMultiLine|text"
+            android:inputType="textMultiLine|textCapSentences"
             android:lines="3"
             android:maxLength="256"
             android:nextFocusDown="@+id/btnSave"
@@ -81,6 +81,25 @@
             android:hint="@string/AdventureDescriptionHint"
             android:scrollbars="vertical"
             app:layout_constraintTop_toBottomOf="@+id/tvAdventureDescriptionLabel" />
+
+        <TextView
+            android:id="@+id/adventureTypeLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="4dp"
+            android:text="@string/AdventureType"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/etAdventureDescription"
+            />
+
+        <Spinner
+            android:id="@+id/spinnerAdventureType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/EnterAdventureType"
+            android:spinnerMode="dialog"
+            app:layout_constraintTop_toBottomOf="@+id/adventureTypeLabel" />
 
 
         <Button

@@ -18,10 +18,10 @@
     <string name="ListAdventures">List Adventures</string>
 
 
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
+    <string-array name="adventureTypeArray">
+        <item>Simple Adventure</item>
+        <item>Advanced Adventure</item>
+        <item>Customized Events Adventure</item>
     </string-array>
 
 
@@ -48,7 +48,14 @@
     <string name="AdventureDescriptionHint">Enter Adventure Description Here</string>
 
     <string name="ListOfAdventures">Your Adventures:</string>
+    <string name="AdventureType">Adventure Type</string>
+    <string name="EnterAdventureType">Choose Your Adventure Type:</string>
 
-
+    <string name="NewEventActivity">Add New Event</string>
+    <string name="NewEvent">New Event</string>
+    <string name="NoAdventureSelected">No Adventure Selected</string>
+    <string name="EditAdventure">Edit Adventure</string>
+    <string name="DeleteAdventure">Delete Adventure</string>
+    <string name="AreYouSure">Are You Sure?</string>
 
 </resources>

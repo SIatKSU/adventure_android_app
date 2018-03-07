@@ -1,9 +1,9 @@
 package team12.cs4850.com.adventurecreator;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,11 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -93,13 +90,55 @@ public class AdventureListActivity extends MyBaseActivity {
     }
 
     public void btnClick(View view) {
+        Intent editAdventureIntent;
         switch (view.getId()) {
             case R.id.btnNew:
-                startActivity(new Intent(AdventureListActivity.this, CreateNewAdventureActivity.class));
+                currAdventure = null;
+                editAdventureIntent = new Intent(AdventureListActivity.this, EditOrCreateAdventureActivity.class);
+                editAdventureIntent.putExtra("isNew", true);
+                startActivity(editAdventureIntent);
                 break;
             case R.id.btnEdit:
+
+                if (zAdventureAdapter.selected_position != RecyclerView.NO_POSITION) {
+                    currAdventure = adventureList.get(zAdventureAdapter.selected_position);
+                    editAdventureIntent = new Intent(AdventureListActivity.this, EditOrCreateAdventureActivity.class);
+                    editAdventureIntent.putExtra("isNew", false);
+                    startActivity(editAdventureIntent);
+                }
+                else {
+                    //Snackbar.make(view, getResources().getString(R.string.NoAdventureSelected), Snackbar.LENGTH_SHORT)
+                    //        .setAction("Action", null).show();
+                    Toast.makeText(this, getResources().getString(R.string.NoAdventureSelected), Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.btnDelete:
+                if (zAdventureAdapter.selected_position != RecyclerView.NO_POSITION) {
+                    currAdventure = adventureList.get(zAdventureAdapter.selected_position);
+
+                    android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(this)
+                            .setTitle(getString(R.string.DeleteAdventure))
+                            .setMessage(getString(R.string.AreYouSure))
+                            .setCancelable(true)
+                            .setNegativeButton(getString(android.R.string.cancel), null)
+                            .setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String adventureKey = currAdventure.adventureKey;
+                                    mDatabase.child("adventures").child(adventureKey).removeValue();
+                                    mDatabase.child("users").child(auth.getUid()).child("myAdventures").child(adventureKey).removeValue();
+
+                                }
+                    });
+                    android.app.AlertDialog confirmDialog = adb.create();
+                    confirmDialog.show();
+                }
+                else {
+                    //Snackbar.make(view, getResources().getString(R.string.NoAdventureSelected), Snackbar.LENGTH_SHORT)
+                    //        .setAction("Action", null).show();
+                    Toast.makeText(this, getResources().getString(R.string.NoAdventureSelected), Toast.LENGTH_SHORT).show();
+                }
+
                 break;
         }
     }

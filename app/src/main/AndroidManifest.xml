@@ -39,14 +39,19 @@
             android:parentActivityName=".PostLoginActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".CreateNewAdventureActivity"
+            android:name=".EditOrCreateAdventureActivity"
             android:label="@string/title_activity_create_new_adventure"
             android:launchMode="singleTask"
             android:parentActivityName=".AdventureListActivity"
             android:windowSoftInputMode="adjustPan" />
-
+        <activity
+            android:name=".NewEventActivity"
+            android:label="@string/NewEventActivity"
+            android:launchMode="singleTask"
+            android:parentActivityName=".AdventureListActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".EventActivity" />
-        <activity android:name=".NewEventActivity" />
+
 
     </application>
 
