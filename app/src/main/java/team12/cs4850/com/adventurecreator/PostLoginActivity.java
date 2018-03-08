@@ -20,6 +20,7 @@ public class PostLoginActivity extends MyBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        hasBackNavigationArrow = false;
         super.onCreate(savedInstanceState);
         tvLoggedInAs = findViewById(R.id.tvUsername);
     }

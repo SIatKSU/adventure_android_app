@@ -20,7 +20,7 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
 
     private Spinner spinnerAdventureType;
 
-    private boolean isNew;
+    //private boolean isNew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
         //spinnerAdventureType.setOnItemSelectedListener(spinnerListener);
 
 
-        isNew  = getIntent().getBooleanExtra("isNew", false);
+        //isNew  = getIntent().getBooleanExtra("isNew", false);
         //Toast.makeText(this, Boolean.toString(isNew), Toast.LENGTH_SHORT).show();
         if (!isNew) {
             setTitle(getString(R.string.EditAdventure));
@@ -136,8 +136,8 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
 
                         mDatabase.child("adventures").child(adventureKey).setValue(currAdventure);
 
-
-                        startActivity(new Intent(EditOrCreateAdventureActivity.this, NewEventActivity.class));
+                        //isNew = false;
+                        startActivity(new Intent(EditOrCreateAdventureActivity.this, EventListActivity.class));
                         finish();
                     }
                 }

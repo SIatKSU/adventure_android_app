@@ -27,6 +27,7 @@ public class StartActivity extends MyBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        hasBackNavigationArrow = false;
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_start);
     }

@@ -41,6 +41,7 @@
     <string name="New">New</string>
     <string name="Edit">Edit</string>
     <string name="Delete">Delete</string>
+    <string name="Next">Next</string>
 
     <string name="AdventureName">Adventure Name</string>
     <string name="AdventureNameHint">Enter Adventure Name</string>
@@ -52,10 +53,19 @@
     <string name="EnterAdventureType">Choose Your Adventure Type:</string>
 
     <string name="NewEventActivity">Add New Event</string>
-    <string name="NewEvent">New Event</string>
+    <string name="EventId">Event #:</string>
+    <string name="EventTitle">Event Title</string>
+    <string name="EventTitleHint">Enter optional event title here</string>
+    <string name="EventDescriptionHint">Enter event description here</string>
+
     <string name="NoAdventureSelected">No Adventure Selected</string>
     <string name="EditAdventure">Edit Adventure</string>
     <string name="DeleteAdventure">Delete Adventure</string>
     <string name="AreYouSure">Are You Sure?</string>
+
+    <string name="EventList">Event List</string>
+    <string name="EventsListTitle">AdventureNameHere</string>
+    <string name="EditEvent">Edit Event</string>
+    <string name="DeleteEvent">Delete Event</string>
 
 </resources>

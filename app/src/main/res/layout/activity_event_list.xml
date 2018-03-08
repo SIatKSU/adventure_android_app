@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="team12.cs4850.com.adventurecreator.EventListActivity">
+
+    <include layout="@layout/mytoolbar" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/configPackLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:padding="10dp">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineH1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineV0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.09" />
+
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineV1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.22" />
+
+        <TextView
+            android:id="@+id/eventsLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="4dp"
+            android:text="@string/EventsListTitle"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mEventsRecycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/rectangleborder"
+            android:scrollbars="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/eventsLabel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/event_list_item"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>

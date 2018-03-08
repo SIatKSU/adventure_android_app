@@ -45,6 +45,12 @@
             android:parentActivityName=".AdventureListActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".EventListActivity"
+            android:label="@string/EventList"
+            android:launchMode="singleTask"
+            android:parentActivityName=".EditOrCreateAdventureActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".NewEventActivity"
             android:label="@string/NewEventActivity"
             android:launchMode="singleTask"

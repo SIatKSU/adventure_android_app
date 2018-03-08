@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -19,13 +20,14 @@ import com.google.firebase.database.FirebaseDatabase;
 public abstract class MyBaseActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener  {
 
     protected Toolbar toolbar;
+    protected boolean hasBackNavigationArrow = true;
 
     protected DatabaseReference mDatabase;
     protected FirebaseAuth auth;
 
     static ZAdventure currAdventure;
+    static boolean isNew = false;
 
-    //protected static boolean startingUpSoConnectSilently = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,10 +100,13 @@ public abstract class MyBaseActivity extends AppCompatActivity implements Fireba
         toolbar = findViewById(R.id.my_toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            // Get a support ActionBar corresponding to this toolbar
-            //ActionBar ab = getSupportActionBar();
-            // Enable the Up button
-            //ab.setDisplayHomeAsUpEnabled(true);
+
+            if (hasBackNavigationArrow) {
+                // Get a support ActionBar corresponding to this toolbar
+                ActionBar ab = getSupportActionBar();
+                // Enable the Up button
+                ab.setDisplayHomeAsUpEnabled(true);
+            }
         }
     }
 
