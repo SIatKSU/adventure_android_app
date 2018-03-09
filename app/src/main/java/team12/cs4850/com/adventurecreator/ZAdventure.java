@@ -16,6 +16,7 @@ public class ZAdventure {
     public int adventureType;
 
     public List<ZEvent> events = null;
+    public int eventCounter = 0;
 
 
     public ZAdventure() {
@@ -29,6 +30,11 @@ public class ZAdventure {
         this.adventureDescription = adventureDescription;
         this.dateModified = System.currentTimeMillis();
         this.adventureType = adventureType;
+    }
+
+    public ZEvent AddNewEvent(String title, String description) {
+            ++eventCounter;  //start at one
+            return new ZEvent (title, description, eventCounter);
     }
 
 }

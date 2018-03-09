@@ -1,5 +1,7 @@
 package team12.cs4850.com.adventurecreator;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.List;
 
 /**
@@ -11,9 +13,8 @@ import java.util.List;
 
 public class ZEvent {
 
-    static int eventIdCounter;
     int eventId;                //1, 2, 3, 4.     0 = starting node.
-    String ZEventKey;           //for convenience - the entry Key in Firebase
+    //String ZEventKey;           //for convenience - the entry Key in Firebase
 
     String title;           //optional event title
 
@@ -33,10 +34,16 @@ public class ZEvent {
     public ZEvent () {
     }
 
-    public ZEvent(String zEventKey, String description) {
+/*    public ZEvent(String zEventKey, String title, String description) {
         ++eventIdCounter;
         eventId = eventIdCounter;           //start at 1.
         this.ZEventKey = zEventKey;
+        this.description = description;
+    }*/
+
+    public ZEvent(String title, String description, int eventId) {
+        this.eventId = eventId;           //start at 1.
+        this.title = title;
         this.description = description;
     }
 }

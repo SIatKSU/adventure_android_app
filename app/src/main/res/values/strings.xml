@@ -68,4 +68,9 @@
     <string name="EditEvent">Edit Event</string>
     <string name="DeleteEvent">Delete Event</string>
 
+    <string name="AddNextEvent">Add Next Event</string>
+    <string name="TriggerWords">Alexa Trigger Words</string>
+    <string name="EnterAlexaTriggerWords">Enter Alexa Trigger Phrases (Comma-separated)</string>
+    <string name="SelectNextEvent">Select Next Event</string>
+
 </resources>

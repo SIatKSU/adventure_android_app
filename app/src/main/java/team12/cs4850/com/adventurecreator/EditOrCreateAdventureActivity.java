@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EditOrCreateAdventureActivity extends MyBaseActivity {
 
     private TextView adventureTypeLabel;
@@ -134,9 +137,15 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
                             currAdventure.adventureDescription = adventureDescription;
                         }
 
+                        //if currAdventure has no starting event, add one
+                        if ((currAdventure.events == null) || (currAdventure.events.size() == 0)) {
+                            currAdventure.events = new ArrayList<ZEvent>();
+                            ZEvent startNode = currAdventure.AddNewEvent("Starting event", "Enter your description here");
+                            currAdventure.events.add(startNode);
+                        }
                         mDatabase.child("adventures").child(adventureKey).setValue(currAdventure);
+                        isNew = false;
 
-                        //isNew = false;
                         startActivity(new Intent(EditOrCreateAdventureActivity.this, EventListActivity.class));
                         finish();
                     }

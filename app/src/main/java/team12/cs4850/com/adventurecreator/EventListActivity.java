@@ -23,13 +23,13 @@ import java.util.ArrayList;
 public class EventListActivity extends MyBaseActivity {
 
     private TextView adventureLabel;
-//
-//    private RecyclerView adventureRecyclerView;
-//    private ZAdventureAdapter zAdventureAdapter;
-//    private ArrayList<ZAdventure> adventureList = new ArrayList<>();
-//
-//    private Query query;
-//    private ValueEventListener myQueryListener;
+
+    private RecyclerView eventRecyclerView;
+    private ZEventAdapter zEventAdapter;
+    //private ArrayList<ZEvent> eventList = new ArrayList<>();
+
+    private Query query;
+    private ValueEventListener myQueryListener;
 
     private static final String TAG = "EventListPage";
 
@@ -37,15 +37,14 @@ public class EventListActivity extends MyBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         adventureLabel = findViewById(R.id.eventsLabel);
-//        adventureRecyclerView = findViewById(R.id.mAdventureRecycler);
-//
-//        adventureRecyclerView.setHasFixedSize(true);
-//        LinearLayoutManager myLayoutMgr = new LinearLayoutManager(this);
+        eventRecyclerView = findViewById(R.id.mEventsRecycler);
+
+        eventRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager myLayoutMgr = new LinearLayoutManager(this);
 //        myLayoutMgr.setReverseLayout(true);
 //        myLayoutMgr.setStackFromEnd(true);
-//        adventureRecyclerView.setLayoutManager(myLayoutMgr);
+        eventRecyclerView.setLayoutManager(myLayoutMgr);
 
         adventureLabel.setText(currAdventure.adventureName);
 
@@ -79,12 +78,12 @@ public class EventListActivity extends MyBaseActivity {
     @Override
     public void onStart() {
         super.onStart();
-//        if (isSignedIn()) {
+        if (isSignedIn()) {
 //            FirebaseUser user = auth.getCurrentUser();
 //            tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
 //
-//            attachRecyclerViewAdapter();
-//        }
+            attachRecyclerViewAdapter();
+        }
     }
 
     @Override
@@ -150,14 +149,15 @@ public class EventListActivity extends MyBaseActivity {
 
     private void attachRecyclerViewAdapter() {
 
+
 //        if (myQueryListener != null) {
 //            query.removeEventListener(myQueryListener);
 //        }
 //
 //        query = mDatabase.child("adventures").orderByChild("userid").equalTo(auth.getUid());
 //
-//        zAdventureAdapter = new ZAdventureAdapter(adventureList);
-//        adventureRecyclerView.setAdapter(zAdventureAdapter);
+        zEventAdapter = new ZEventAdapter(currAdventure.events);
+        eventRecyclerView.setAdapter(zEventAdapter);
 //
 //        myQueryListener = query.addValueEventListener(new ValueEventListener() {
 //            @Override
