@@ -69,8 +69,12 @@
     <string name="DeleteEvent">Delete Event</string>
 
     <string name="AddNextEvent">Add Next Event</string>
-    <string name="TriggerWords">Alexa Trigger Words</string>
+    <string name="TriggerWords">Alexa Trigger Phrases</string>
     <string name="EnterAlexaTriggerWords">Enter Alexa Trigger Phrases (Comma-separated)</string>
     <string name="SelectNextEvent">Select Next Event</string>
+
+    <string name="AddChildEventActivity">Add Child Event</string>
+    <string name="SpinnerChooseNextNode">Choose Next Node</string>
+    <string name="SelectEventType">Select Event Type</string>
 
 </resources>

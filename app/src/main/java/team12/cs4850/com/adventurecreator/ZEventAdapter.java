@@ -43,8 +43,7 @@ public class ZEventAdapter extends RecyclerView.Adapter<ZEventAdapter.ZEventHold
         @Override
         public void onClick(View itemView) {
             Intent i = new Intent(itemView.getContext(), EditEventActivity.class);
-            //ZEvent zEvent = zEventList.get(getLayoutPosition());
-            i.putExtra("eventListPosition", getLayoutPosition());
+            i.putExtra("eventId", zEventList.get(getLayoutPosition()).eventId);
             itemView.getContext().startActivity(i);
         }
 

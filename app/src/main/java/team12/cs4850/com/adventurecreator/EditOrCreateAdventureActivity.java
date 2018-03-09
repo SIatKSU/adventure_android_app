@@ -140,7 +140,7 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
                         //if currAdventure has no starting event, add one
                         if ((currAdventure.events == null) || (currAdventure.events.size() == 0)) {
                             currAdventure.events = new ArrayList<ZEvent>();
-                            ZEvent startNode = currAdventure.AddNewEvent("Starting event", "Enter your description here");
+                            ZEvent startNode = currAdventure.AddNewEvent("Starting event", "Replace with your description");
                             currAdventure.events.add(startNode);
                         }
                         mDatabase.child("adventures").child(adventureKey).setValue(currAdventure);
