@@ -82,102 +82,26 @@
             android:scrollbars="vertical"
             app:layout_constraintTop_toBottomOf="@+id/eventDescriptionLabel" />
 
-        <Button
-            android:id="@+id/btnAddChildEvent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="btnClick"
-            android:visibility="gone"
-            android:text="@string/AddNextEvent"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@+id/etDescription"
-
-        />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/mAdventureRecycler"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/rectangleborder"
-            android:scrollbars="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvAdventureListLabel"
-            tools:listitem="@layout/adventure_list_item"
-            />
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="#abc7f2d8"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="@+id/nextEventLabel"
-            app:layout_constraintBottom_toBottomOf="@+id/selectNextEventLabel"
-            />
-
-
-
         <TextView
-            android:id="@+id/nextEventLabel"
-            android:layout_width="wrap_content"
+            android:id="@+id/childNodeRecyclerLabel"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:paddingLeft="4dp"
-            android:text="@string/AddNextEvent"
-            android:textSize="20sp"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/ChildNodes"
+            android:textSize="18sp"
             app:layout_constraintTop_toBottomOf="@id/etDescription"
             />
 
-        <EditText
-            android:id="@+id/etTriggerWords"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mChildNodeRecycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:inputType="text"
-            android:lines="1"
-            android:visibility="gone"
-            android:maxLength="64"
-            android:textSize="16sp"
-            android:paddingLeft="4dp"
-            android:hint="@string/EnterAlexaTriggerWords"
-            app:layout_constraintTop_toBottomOf="@+id/nextEventLabel" />
-
-        <TextView
-            android:id="@+id/selectNextEventLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingLeft="4dp"
-            android:visibility="gone"
-            android:text="@string/SelectNextEvent"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/etTriggerWords"
-            />
-
-        <Spinner
-            android:id="@+id/spinnerAdventureType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:prompt="@string/EnterAdventureType"
-            android:spinnerMode="dialog"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/selectNextEventLabel" />
-
-        <ImageButton
-            android:id="@+id/btnAddChildEvent2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:visibility="gone"
-            android:contentDescription="@string/AddNextEvent"
-            app:srcCompat="@drawable/ic_add_black_24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/nextEventLabel"
+            android:layout_height="0dp"
+            android:background="@drawable/rectangleborder"
+            android:scrollbars="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/childNodeRecyclerLabel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/event_list_item"
             />
 
 

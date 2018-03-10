@@ -2,6 +2,7 @@ package team12.cs4850.com.adventurecreator;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,5 +46,8 @@ public class ZEvent {
         this.eventId = eventId;           //start at 1.
         this.title = title;
         this.description = description;
+
+        actions = new ArrayList<>();
+        nextEventIds = new ArrayList<>();
     }
 }

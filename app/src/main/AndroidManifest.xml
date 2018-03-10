@@ -54,7 +54,7 @@
             android:name=".EditEventActivity"
             android:label="@string/NewEventActivity"
             android:launchMode="singleTask"
-            android:parentActivityName=".AdventureListActivity"
+            android:parentActivityName=".EventListActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".AddChildEventActivity"
@@ -62,9 +62,6 @@
             android:launchMode="singleTask"
             android:parentActivityName=".EditEventActivity"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".EventActivity" />
-
 
     </application>
 

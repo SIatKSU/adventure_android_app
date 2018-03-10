@@ -2,11 +2,16 @@ package team12.cs4850.com.adventurecreator;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditEventActivity extends MyBaseActivity {
 
@@ -16,6 +21,10 @@ public class EditEventActivity extends MyBaseActivity {
 
     private EditText etEventTitle, etDescription;
 
+    private RecyclerView childEventRecycler;
+    private ZChildEventAdapter zChildEventAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +32,13 @@ public class EditEventActivity extends MyBaseActivity {
 
         etEventTitle = findViewById(R.id.etEventTitle);
         etDescription = findViewById(R.id.etDescription);
+        childEventRecycler = findViewById(R.id.mChildNodeRecycler);
+
+        childEventRecycler.setHasFixedSize(true);
+        LinearLayoutManager myLayoutMgr = new LinearLayoutManager(this);
+//        myLayoutMgr.setReverseLayout(true);
+//        myLayoutMgr.setStackFromEnd(true);
+        childEventRecycler.setLayoutManager(myLayoutMgr);
 
     }
 
@@ -86,6 +102,7 @@ public class EditEventActivity extends MyBaseActivity {
             etEventTitle.setText(currEvent.title);
             etDescription.setText(currEvent.description);
 
+            attachRecyclerViewAdapter();
             //FirebaseUser user = auth.getCurrentUser();
             //tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
         }
@@ -121,6 +138,21 @@ public class EditEventActivity extends MyBaseActivity {
             etDescription.setError(null);
             return true;
         }
+    }
+
+    private void attachRecyclerViewAdapter() {
+
+        List<ZEvent> childEvents = new ArrayList<>();
+
+        for (Integer id:currEvent.nextEventIds) {
+            for (ZEvent zEvent:currAdventure.events) {
+                if (zEvent.eventId == id) {
+                    childEvents.add(zEvent);
+                }
+            }
+        }
+        zChildEventAdapter = new ZChildEventAdapter(childEvents);
+        childEventRecycler.setAdapter(zChildEventAdapter);
     }
 
 }

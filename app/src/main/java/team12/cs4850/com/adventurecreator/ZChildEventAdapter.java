@@ -1,8 +1,6 @@
 package team12.cs4850.com.adventurecreator;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,15 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by siatk on 3/3/2018.
  */
 
-public class ZEventAdapter extends RecyclerView.Adapter<ZEventAdapter.ZEventHolder> {
+public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.ZEventHolder> {
 
     private List<ZEvent> zEventList;
 
@@ -41,8 +37,8 @@ public class ZEventAdapter extends RecyclerView.Adapter<ZEventAdapter.ZEventHold
 
         @Override
         public void onClick(View itemView) {
-            Intent i = new Intent(itemView.getContext(), EditEventActivity.class);
-            i.putExtra("eventId", zEventList.get(getLayoutPosition()).eventId);
+            Intent i = new Intent(itemView.getContext(), AddChildEventActivity.class);
+            //i.putExtra("eventId", zEventList.get(getLayoutPosition()).eventId);
             itemView.getContext().startActivity(i);
         }
 
@@ -54,7 +50,7 @@ public class ZEventAdapter extends RecyclerView.Adapter<ZEventAdapter.ZEventHold
 
     }
 
-    public ZEventAdapter(List<ZEvent> zEventList) {
+    public ZChildEventAdapter(List<ZEvent> zEventList) {
         this.zEventList = zEventList;
     }
 

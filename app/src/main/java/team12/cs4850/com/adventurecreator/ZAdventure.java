@@ -1,5 +1,6 @@
 package team12.cs4850.com.adventurecreator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class ZAdventure {
     public long dateModified;    //long currDate = System.currentTimeMillis();     //use mDate = Date(currDate) to get it back.
     public int adventureType;
 
-    public List<ZEvent> events = null;
+    public List<ZEvent> events;
     public int eventCounter = 0;
 
 
@@ -30,11 +31,15 @@ public class ZAdventure {
         this.adventureDescription = adventureDescription;
         this.dateModified = System.currentTimeMillis();
         this.adventureType = adventureType;
+
+        events = new ArrayList<>();
     }
 
     public ZEvent AddNewEvent(String title, String description) {
-            ++eventCounter;  //start at one
-            return new ZEvent (title, description, eventCounter);
+        ++eventCounter;  //start at one
+        ZEvent newEvent = new ZEvent(title, description, eventCounter);
+        events.add(newEvent);
+        return newEvent;
     }
 
 }

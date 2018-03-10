@@ -77,4 +77,10 @@
     <string name="SpinnerChooseNextNode">Choose Next Node</string>
     <string name="SelectEventType">Select Event Type</string>
 
+    <string name="CreateNewChildEvent">Create New Child Event</string>
+    <string name="ChildNodes">Child Nodes</string>
+
+    <string name="YourTitleHere">Your Title Here</string>
+    <string name="YourDescriptionHere">Your Description Here</string>
+
 </resources>

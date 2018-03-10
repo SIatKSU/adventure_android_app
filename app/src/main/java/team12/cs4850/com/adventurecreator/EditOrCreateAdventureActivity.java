@@ -141,13 +141,12 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
                         if ((currAdventure.events == null) || (currAdventure.events.size() == 0)) {
                             currAdventure.events = new ArrayList<ZEvent>();
                             ZEvent startNode = currAdventure.AddNewEvent("Starting event", "Replace with your description");
-                            currAdventure.events.add(startNode);
                         }
                         mDatabase.child("adventures").child(adventureKey).setValue(currAdventure);
                         isNew = false;
 
                         startActivity(new Intent(EditOrCreateAdventureActivity.this, EventListActivity.class));
-                        finish();
+                        //finish();
                     }
                 }
 

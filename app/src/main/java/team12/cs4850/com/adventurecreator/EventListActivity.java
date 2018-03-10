@@ -28,8 +28,8 @@ public class EventListActivity extends MyBaseActivity {
     private ZEventAdapter zEventAdapter;
     //private ArrayList<ZEvent> eventList = new ArrayList<>();
 
-    private Query query;
-    private ValueEventListener myQueryListener;
+//    private Query query;
+//    private ValueEventListener myQueryListener;
 
     private static final String TAG = "EventListPage";
 
