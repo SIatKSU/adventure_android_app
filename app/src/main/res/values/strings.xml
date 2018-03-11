@@ -85,5 +85,7 @@
     <string name="YourDescriptionHere">Your Description Here</string>
     <string name="ActionLabel">Trigger:</string>
 
+    <string name="CantDeleteEventMessage">You can\'t delete events that have children.</string>
+    <string name="CantDeleteStartNode">You can\'t delete the starting event.</string>
 
 </resources>

@@ -22,17 +22,21 @@ public class ZEvent {
     String description;
     int eventType = 0;          //default, basic ZEvent
 
-    String prevEventKey;          //to go back
+    String prevEventKey;          //to go back in the game
 
-    List<String> actions;         //e.g. "go left", "go right", "go center"
+    List<Integer> prevEventIds;     //which Nodes call this node?  when a node gets deleted, we also need to remove references to it from calling nodes.
+
+    List<String> nextActions;         //e.g. "go left", "go right", "go center"
     List<Integer> nextEventIds;    //e.g. leftNode, rightNode, centerNode
 
 
     //int level = 0;    // level only makes sense in the context of TreeAdventure -
                         // where you can only add to layer immediately below current level
 
-
     public ZEvent () {
+        nextActions = new ArrayList<>();
+        nextEventIds = new ArrayList<>();
+        prevEventIds = new ArrayList<>();
     }
 
 /*    public ZEvent(String zEventKey, String title, String description) {
@@ -47,12 +51,13 @@ public class ZEvent {
         this.title = title;
         this.description = description;
 
-        actions = new ArrayList<>();
+        nextActions = new ArrayList<>();
         nextEventIds = new ArrayList<>();
+        prevEventIds = new ArrayList<>();
     }
 
     @Exclude
-    public int getTriggerWordsIndexFromChildEventId(int childEventId) {
+    public int getIndexFromChildEventId(int childEventId) {
         for (int i = 0; i < nextEventIds.size(); i++) {
             if (nextEventIds.get(i) == childEventId) {
                 return i;
@@ -65,7 +70,7 @@ public class ZEvent {
     public String getTriggerWordsFromChildEventId(int childEventId) {
         for (int i = 0; i < nextEventIds.size(); i++) {
             if (nextEventIds.get(i) == childEventId) {
-                return actions.get(i);
+                return nextActions.get(i);
             }
         }
         return null;

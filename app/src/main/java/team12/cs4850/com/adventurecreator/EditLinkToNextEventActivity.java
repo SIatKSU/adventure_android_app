@@ -1,6 +1,5 @@
 package team12.cs4850.com.adventurecreator;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -28,7 +27,8 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
 
     private List<String> nextNodeStringList;
     private List<Integer> nextNodeList;
-    //private List<String> eventTypes;
+
+    private ZEvent zOrigChildEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,6 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
         tvEventType = findViewById(R.id.tvEventType);
 
         //setup eventTypes spinner
-        //eventTypes = getEventTypes();
         ArrayAdapter<String> spinnerEventTypeAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, eventTypes);
         spinnerEventTypeAdapter.setDropDownViewResource(R.layout.my_spinner_layout);
@@ -50,7 +49,7 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
         //setup nextNode spinner
         nextNodeStringList = new ArrayList<>();
         nextNodeList = new ArrayList<>();
-        for (ZEvent zEvent: currAdventure.events) {
+        for (ZEvent zEvent : currAdventure.events) {
             if (zEvent.eventId != currEvent.eventId) {
                 nextNodeList.add(zEvent.eventId);
                 nextNodeStringList.add(Integer.toString(zEvent.eventId) + " " + zEvent.title);
@@ -68,18 +67,23 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
             spinnerNextNode.setSelection(nextNodeStringList.size() - 1);      //default to create a new node
             tvEventType.setVisibility(View.VISIBLE);
             spinnerEventType.setVisibility(View.VISIBLE);               //default to create a new node
-        }
-        else {
+        } else {
             //currChildEvent.eventId
             String triggerWords = currEvent.getTriggerWordsFromChildEventId(currChildEvent.eventId);
             etTriggerWords.setText(triggerWords);
             int spinnerIndex = nextNodeList.indexOf(currChildEvent.eventId);
-            spinnerNextNode.setSelection(spinnerIndex);      //default to create a new node
+            spinnerNextNode.setSelection(spinnerIndex);
 
             tvEventType.setVisibility(View.INVISIBLE);
             spinnerEventType.setVisibility(View.INVISIBLE);               //default to create a new node
-        }
 
+        }
+        zOrigChildEvent = currChildEvent;
+        if (zOrigChildEvent != null) {
+            if (zOrigChildEvent.prevEventIds == null) {
+                zOrigChildEvent.prevEventIds = new ArrayList<>();
+            }
+        }
 
         SpinnerInteractionListener spinnerListener = new SpinnerInteractionListener();
         spinnerNextNode.setOnTouchListener(spinnerListener);
@@ -94,13 +98,6 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
 
 
     }
-
-//    private List<String> getEventTypes () {
-//        List<String> eventTypes = new ArrayList<>();
-//        eventTypes.add("basic event");
-//        return eventTypes;
-//    }
-
 
     @Override
     protected int getLayoutResource() {
@@ -177,8 +174,7 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
                     case R.id.spinnerNextNode:
                         if (pos == nextNodeStringList.size() - 1) {//"Create New Child" Option was picked"
                             spinnerEventType.setVisibility(View.VISIBLE);
-                        }
-                        else {
+                        } else {
                             spinnerEventType.setVisibility(View.INVISIBLE);
                         }
                         break;
@@ -194,44 +190,69 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
 
     private void tryToSaveChildEvent() {
         if (okToSave()) {
-            if (currEvent.actions == null) {
-                currEvent.actions = new ArrayList<>();
+            if (currEvent.nextActions == null) {
+                currEvent.nextActions = new ArrayList<>();
                 currEvent.nextEventIds = new ArrayList<>();
             }
-            int triggerIndex;
+            int index;
             String triggerWords = etTriggerWords.getText().toString().trim();
 
             if (spinnerNextNode.getSelectedItemPosition() == nextNodeStringList.size() - 1) {
-                //Toast.makeText(getBaseContext(), "New Child", Toast.LENGTH_SHORT).show();
+                //linking to a new child
+
                 ZEvent newChildEvent = currAdventure.AddNewEvent(getString(R.string.YourTitleHere), getString(R.string.YourDescriptionHere));
 
-
                 if (isNewChildEvent) {
-                    currEvent.actions.add(triggerWords);
+                    //creating a new child link
+
+                    currEvent.nextActions.add(triggerWords);
                     currEvent.nextEventIds.add(newChildEvent.eventId);
-                }
-                else {
-                    triggerIndex = currEvent.getTriggerWordsIndexFromChildEventId(newChildEvent.eventId);
-                    currEvent.actions.set(triggerIndex, triggerWords);
-                    currEvent.nextEventIds.set(triggerIndex, newChildEvent.eventId);
+                    newChildEvent.prevEventIds.add(currEvent.eventId);      //add a reference to the parent linking to this node
+                } else {
+                    //editing an existing link
+
+                    index = currEvent.getIndexFromChildEventId(zOrigChildEvent.eventId);
+                    currEvent.nextActions.set(index, triggerWords);
+                    currEvent.nextEventIds.set(index, newChildEvent.eventId);
+
+                    //in the previous child, remove the reference to the parent linking to this node
+                    zOrigChildEvent.prevEventIds.remove((Integer) currEvent.eventId);
+                    //in the current child, add a reference to the parent linking to this node
+                    newChildEvent.prevEventIds.add(currEvent.eventId);
                 }
                 //dont forget the adventure counter is being updated, and needs to be saved as well
                 //saving could be done more efficiently, more targeted - but not going to worry about this for now
                 mDatabase.child("adventures").child(currAdventure.adventureKey).setValue(currAdventure);
                 currEvent = newChildEvent;
-            }
-            else {
-                //linking to an existing node
+            } else {
+                //linking to an existing child
+
                 int nextEventId = nextNodeList.get(spinnerNextNode.getSelectedItemPosition());
+                ZEvent nextEvent = currAdventure.getEventFromEventListUsingEventId(nextEventId);
 
                 if (isNewChildEvent) {
-                    currEvent.actions.add(triggerWords);
+                    //creating a new child link
+
+                    currEvent.nextActions.add(triggerWords);
                     currEvent.nextEventIds.add(nextEventId);
-                }
-                else {
-                    triggerIndex = currEvent.getTriggerWordsIndexFromChildEventId(nextEventId);
-                    currEvent.actions.set(triggerIndex, triggerWords);
-                    currEvent.nextEventIds.set(triggerIndex, nextEventId);
+                    if (nextEvent.prevEventIds == null) {
+                        nextEvent.prevEventIds = new ArrayList<>();
+                    }
+                    nextEvent.prevEventIds.add(currEvent.eventId);      //add a reference to the parent linking to this node
+                } else {
+                    //editing an existing link
+
+                    index = currEvent.getIndexFromChildEventId(nextEventId);
+                    currEvent.nextActions.set(index, triggerWords);
+                    currEvent.nextEventIds.set(index, nextEventId);
+
+                    if (zOrigChildEvent != nextEvent) {
+                        //in the previous child, remove the reference to the parent linking to this node
+                        zOrigChildEvent.prevEventIds.remove((Integer) currEvent.eventId);
+                        //in the current child, add a reference to the parent linking to this node
+                        nextEvent.prevEventIds.add(currEvent.eventId);
+                    }
+
                 }
                 //saving could be done more efficiently, more targeted - but not going to worry about this for now
                 mDatabase.child("adventures").child(currAdventure.adventureKey).setValue(currAdventure);
@@ -249,8 +270,7 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
             etTriggerWords.clearFocus();
             etTriggerWords.requestFocus();
             return false;
-        }
-        else {
+        } else {
             etTriggerWords.setError(null);
             return true;
         }

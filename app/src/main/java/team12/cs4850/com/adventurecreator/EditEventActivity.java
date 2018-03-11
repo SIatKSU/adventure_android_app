@@ -1,5 +1,6 @@
 package team12.cs4850.com.adventurecreator;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class EditEventActivity extends MyBaseActivity {
 
@@ -73,6 +75,45 @@ public class EditEventActivity extends MyBaseActivity {
                     //mDatabase.child("adventures").child(currAdventure.adventureKey).child("events").child(Integer.toString(listPosition)).setValue(currEvent);
                 }
                 return true;
+            case R.id.action_delete:
+                if (currEvent.eventId == 1){
+                    Toast.makeText(this, getResources().getString(R.string.CantDeleteStartNode), Toast.LENGTH_SHORT).show();
+                }
+                else if ((currEvent.nextEventIds != null) && (currEvent.nextEventIds.size() != 0)) {
+                    Toast.makeText(this, getResources().getString(R.string.CantDeleteEventMessage), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(this)
+                            .setTitle(getString(R.string.DeleteEvent))
+                            .setMessage(getString(R.string.AreYouSure))
+                            .setCancelable(true)
+                            .setNegativeButton(getString(android.R.string.cancel), null)
+                            .setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    //remove references to currEvent
+                                    ZEvent parentEventToUpdate;
+                                    if ((currEvent.prevEventIds != null) && (currEvent.prevEventIds.size() != 0)) {
+                                        for (int zPrevEventId: currEvent.prevEventIds) {
+                                            parentEventToUpdate = currAdventure.getEventFromEventListUsingEventId(zPrevEventId);
+                                            parentEventToUpdate.nextEventIds.remove((Integer) currEvent.eventId);
+                                        }
+                                    }
+                                    currAdventure.events.remove(currEvent);
+                                    mDatabase.child("adventures").child(currAdventure.adventureKey).setValue(currAdventure);
+                                    currEvent = null;
+                                    finish();
+//                                    String adventureKey = currAdventure.adventureKey;
+//                                    mDatabase.child("adventures").child(adventureKey).removeValue();
+//                                    mDatabase.child("users").child(auth.getUid()).child("myAdventures").child(adventureKey).removeValue();
+
+                                }
+                            });
+                    android.app.AlertDialog confirmDialog = adb.create();
+                    confirmDialog.show();
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -82,41 +123,17 @@ public class EditEventActivity extends MyBaseActivity {
     public void onStart() {
         super.onStart();
         if (isSignedIn()) {
-
-//            eventId  = getIntent().getIntExtra("eventId", 0);
-//            for (ZEvent zEvent: currAdventure.events) {
-//                if (zEvent.eventId == eventId) {
-//                    currEvent = zEvent;
-//                }
-//            }
-
             setTitle(getString(R.string.EditEvent) + " " + Integer.toString(currEvent.eventId));
             etEventTitle.setText(currEvent.title);
             etDescription.setText(currEvent.description);
 
             attachRecyclerViewAdapter();
-            //FirebaseUser user = auth.getCurrentUser();
-            //tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
         }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-    }
-
-    public void btnClick(View view) {
-        switch (view.getId()) {
-//            case R.id.btnAddChildEvent:
-//
-//                break;
-//                startActivity(new Intent(AdventureListActivity.this, CreateNewAdventureActivity.class));
-//                finish();
-//                break;
-//            case R.id.btnCancel:
-//                finish();
-//                break;
-        }
     }
 
     private boolean okToSave() {

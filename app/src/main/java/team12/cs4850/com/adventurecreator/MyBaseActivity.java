@@ -109,7 +109,7 @@ public abstract class MyBaseActivity extends AppCompatActivity implements Fireba
         }
     }*/
 
-    //override update status in derived class if more specific actions required.
+    //override update status in derived class if more specific nextActions required.
     //protected void updateStatus(String statusString) {
     //}
 

@@ -57,7 +57,7 @@ public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.
         ZEvent tempEvent;
 
         if (thisEvent.nextEventIds == null) {
-            thisEvent.actions = new ArrayList<>();
+            thisEvent.nextActions = new ArrayList<>();
             thisEvent.nextEventIds = new ArrayList<>();
         }
 
@@ -84,7 +84,7 @@ public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.
         ZEvent thisEvent = zChildEventList.get(position);
         //thisEvent.eventId
         try {
-            String text1 = "\"" + zEvent.actions.get(position) + "\" -> "
+            String text1 = "\"" + zEvent.nextActions.get(position) + "\" -> "
                     + Integer.toString(thisEvent.eventId) + " " + thisEvent.title;
             holder.tvText1.setText(text1);
             String text2 = MyBaseActivity.eventTypes.get(thisEvent.eventType)
