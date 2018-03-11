@@ -5,31 +5,29 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by siatk on 3/3/2018.
  */
 
-public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.ZEventHolder> {
+public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.ZChildEventHolder> {
 
-    private List<ZEvent> zEventList;
+    private ZEvent zEvent;
+    private List<ZEvent> zChildEventList;
 
-    public class ZEventHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public class ZChildEventHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-        private TextView tvEventId, tvEventTitle, tvEventDescription;
-        private ImageButton btnEdit;
+        private TextView tvText1, tvText2, tvText3;
 
-        public ZEventHolder(View itemView) {
+        public ZChildEventHolder(View itemView) {
             super(itemView);
-            tvEventId = itemView.findViewById(R.id.eventId);
-            tvEventTitle = itemView.findViewById(R.id.eventTitle);
-            tvEventDescription = itemView.findViewById(R.id.eventDescription);
-
-            btnEdit = itemView.findViewById(R.id.btnEdit);
+            tvText1 = itemView.findViewById(R.id.tvText1);
+            tvText2 = itemView.findViewById(R.id.tvText2);
+            tvText3 = itemView.findViewById(R.id.tvText3);
 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -37,8 +35,10 @@ public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.
 
         @Override
         public void onClick(View itemView) {
-            Intent i = new Intent(itemView.getContext(), AddChildEventActivity.class);
+            Intent i = new Intent(itemView.getContext(), EditLinkToNextEventActivity.class);
             //i.putExtra("eventId", zEventList.get(getLayoutPosition()).eventId);
+            MyBaseActivity.isNewChildEvent = false;
+            MyBaseActivity.currChildEvent = zChildEventList.get(getLayoutPosition());
             itemView.getContext().startActivity(i);
         }
 
@@ -50,24 +50,46 @@ public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.
 
     }
 
-    public ZChildEventAdapter(List<ZEvent> zEventList) {
-        this.zEventList = zEventList;
+    public ZChildEventAdapter(ZEvent thisEvent) {
+        this.zEvent = thisEvent;
+        this.zChildEventList = new ArrayList<>();
+
+        ZEvent tempEvent;
+
+        if (thisEvent.nextEventIds == null) {
+            thisEvent.actions = new ArrayList<>();
+            thisEvent.nextEventIds = new ArrayList<>();
+        }
+
+        for (Integer id : thisEvent.nextEventIds) {
+            //find the event matching nextEventsId, and add it to the childEvents array
+            tempEvent = MyBaseActivity.currAdventure.getEventFromEventListUsingEventId(id);
+            if (tempEvent != null) {
+                zChildEventList.add(tempEvent);
+            }
+        }
+
+        //this.zEventList = zEventList;
     }
 
     @Override
-    public ZEventHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ZChildEventHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.event_list_item, parent, false);
-        return new ZEventHolder(itemView);
+                .inflate(R.layout.childevent_list_item, parent, false);
+        return new ZChildEventHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ZEventHolder holder, int position) {
-        ZEvent currEvent = zEventList.get(position);
+    public void onBindViewHolder(ZChildEventHolder holder, int position) {
+        ZEvent thisEvent = zChildEventList.get(position);
+        //thisEvent.eventId
         try {
-            holder.tvEventId.setText(Integer.toString(currEvent.eventId));
-            holder.tvEventTitle.setText(currEvent.title);
-            holder.tvEventDescription.setText(currEvent.description);
+            String text1 = "\"" + zEvent.actions.get(position) + "\" -> "
+                    + Integer.toString(thisEvent.eventId) + " " + thisEvent.title;
+            holder.tvText1.setText(text1);
+            String text2 = MyBaseActivity.eventTypes.get(thisEvent.eventType)
+                    + ".  " + thisEvent.description;
+            holder.tvText2.setText(text2);
         }
         catch (Exception ex) {
             String exceptString = ex.getMessage();
@@ -76,11 +98,11 @@ public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.
 
     @Override
     public int getItemCount() {
-        return zEventList.size();
+        return zChildEventList.size();
     }
 
-    public void updateList(List<ZEvent> ZEventList) {
-        this.zEventList = ZEventList;
+    public void updateList(ZEvent zEvent) {
+        this.zEvent = zEvent;
         notifyDataSetChanged();
     }
 

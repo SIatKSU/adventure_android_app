@@ -14,6 +14,7 @@ public class Constants {
     //public static final int TREE_ADVENTURE = 1;
 
     //Event Types
-    public static final int EVENT = 0;
+    public static final int BASIC_EVENT = 0;
+    public static final String BASIC_EVENT_STRING = "Basic Event";
 
 }

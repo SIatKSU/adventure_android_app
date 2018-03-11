@@ -1,5 +1,6 @@
 package team12.cs4850.com.adventurecreator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -10,24 +11,24 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddChildEventActivity extends MyBaseActivity {
+public class EditLinkToNextEventActivity extends MyBaseActivity {
 
     private static final String TAG = "AddChildEventActivity";
 
-    private int eventId;
-    private ZEvent currEvent;
-
+    //private int eventId;
 
     private EditText etTriggerWords;
+    private TextView tvEventType;
     private Spinner spinnerNextNode, spinnerEventType;
 
-    private List<String> nextNodeList;
-    private List<String> eventTypes;
+    private List<String> nextNodeStringList;
+    private List<Integer> nextNodeList;
+    //private List<String> eventTypes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +37,10 @@ public class AddChildEventActivity extends MyBaseActivity {
         etTriggerWords = findViewById(R.id.etTriggerWords);
         spinnerNextNode = findViewById(R.id.spinnerNextNode);
         spinnerEventType = findViewById(R.id.spinnerEventType);
+        tvEventType = findViewById(R.id.tvEventType);
 
         //setup eventTypes spinner
-        eventTypes = getEventTypes();
+        //eventTypes = getEventTypes();
         ArrayAdapter<String> spinnerEventTypeAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, eventTypes);
         spinnerEventTypeAdapter.setDropDownViewResource(R.layout.my_spinner_layout);
@@ -46,31 +48,44 @@ public class AddChildEventActivity extends MyBaseActivity {
 
 
         //setup nextNode spinner
+        nextNodeStringList = new ArrayList<>();
         nextNodeList = new ArrayList<>();
-        eventId  = getIntent().getIntExtra("eventId", 0);
         for (ZEvent zEvent: currAdventure.events) {
-            if (zEvent.eventId == eventId) {
-                currEvent = zEvent;
-            }
-            else {
-                nextNodeList.add(Integer.toString(zEvent.eventId) + " " + zEvent.title);
+            if (zEvent.eventId != currEvent.eventId) {
+                nextNodeList.add(zEvent.eventId);
+                nextNodeStringList.add(Integer.toString(zEvent.eventId) + " " + zEvent.title);
             }
         }
-        nextNodeList.add(getString(R.string.CreateNewChildEvent));
+        nextNodeStringList.add(getString(R.string.CreateNewChildEvent));
 
         ArrayAdapter<String> spinnerNextNodeAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, nextNodeList);
+                android.R.layout.simple_spinner_item, nextNodeStringList);
         spinnerNextNodeAdapter.setDropDownViewResource(R.layout.my_spinner_layout);
         spinnerNextNode.setAdapter(spinnerNextNodeAdapter);
 
-        spinnerNextNode.setSelection(nextNodeList.size() - 1);      //default to create a new node
-        spinnerEventType.setVisibility(View.VISIBLE);               //default to create a new node
+
+        if (isNewChildEvent) {
+            spinnerNextNode.setSelection(nextNodeStringList.size() - 1);      //default to create a new node
+            tvEventType.setVisibility(View.VISIBLE);
+            spinnerEventType.setVisibility(View.VISIBLE);               //default to create a new node
+        }
+        else {
+            //currChildEvent.eventId
+            String triggerWords = currEvent.getTriggerWordsFromChildEventId(currChildEvent.eventId);
+            etTriggerWords.setText(triggerWords);
+            int spinnerIndex = nextNodeList.indexOf(currChildEvent.eventId);
+            spinnerNextNode.setSelection(spinnerIndex);      //default to create a new node
+
+            tvEventType.setVisibility(View.INVISIBLE);
+            spinnerEventType.setVisibility(View.INVISIBLE);               //default to create a new node
+        }
+
 
         SpinnerInteractionListener spinnerListener = new SpinnerInteractionListener();
         spinnerNextNode.setOnTouchListener(spinnerListener);
         spinnerNextNode.setOnItemSelectedListener(spinnerListener);
 
-/*        if (nextNodeList.size() == 1) {//"Create New Child" Option is only option available
+/*        if (nextNodeStringList.size() == 1) {//"Create New Child" Option is only option available
             spinnerEventType.setVisibility(View.VISIBLE);
         }
         else {
@@ -80,21 +95,24 @@ public class AddChildEventActivity extends MyBaseActivity {
 
     }
 
-    private List<String> getEventTypes () {
-        List<String> eventTypes = new ArrayList<>();
-        eventTypes.add("basic event");
-        return eventTypes;
-    }
+//    private List<String> getEventTypes () {
+//        List<String> eventTypes = new ArrayList<>();
+//        eventTypes.add("basic event");
+//        return eventTypes;
+//    }
 
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_add_child_event;
+        return R.layout.activity_edit_link_to_next_event;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_addchildevent, menu);
+        if (isNewChildEvent) {
+            menu.findItem(R.id.action_delete).setVisible(false);
+        }
         return true;
     }
 
@@ -104,10 +122,11 @@ public class AddChildEventActivity extends MyBaseActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.action_save:
-                tryToSaveChildEvent();
+//            case R.id.action_save:
+//                tryToSaveChildEvent();
+//                return true;
+            case R.id.action_delete:
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -156,7 +175,7 @@ public class AddChildEventActivity extends MyBaseActivity {
                 userSelect = false;
                 switch (parent.getId()) {
                     case R.id.spinnerNextNode:
-                        if (pos == nextNodeList.size() - 1) {//"Create New Child" Option was picked"
+                        if (pos == nextNodeStringList.size() - 1) {//"Create New Child" Option was picked"
                             spinnerEventType.setVisibility(View.VISIBLE);
                         }
                         else {
@@ -179,27 +198,47 @@ public class AddChildEventActivity extends MyBaseActivity {
                 currEvent.actions = new ArrayList<>();
                 currEvent.nextEventIds = new ArrayList<>();
             }
-            if (spinnerNextNode.getSelectedItemPosition() == nextNodeList.size() - 1) {
+            int triggerIndex;
+            String triggerWords = etTriggerWords.getText().toString().trim();
+
+            if (spinnerNextNode.getSelectedItemPosition() == nextNodeStringList.size() - 1) {
                 //Toast.makeText(getBaseContext(), "New Child", Toast.LENGTH_SHORT).show();
                 ZEvent newChildEvent = currAdventure.AddNewEvent(getString(R.string.YourTitleHere), getString(R.string.YourDescriptionHere));
-                currEvent.actions.add(etTriggerWords.getText().toString().trim());
-                currEvent.nextEventIds.add(newChildEvent.eventId);
-                mDatabase.child("adventures").child(currAdventure.adventureKey).setValue(currAdventure);
-                //dont forget the adventure counter is being updated, and needs to be saved as well
 
+
+                if (isNewChildEvent) {
+                    currEvent.actions.add(triggerWords);
+                    currEvent.nextEventIds.add(newChildEvent.eventId);
+                }
+                else {
+                    triggerIndex = currEvent.getTriggerWordsIndexFromChildEventId(newChildEvent.eventId);
+                    currEvent.actions.set(triggerIndex, triggerWords);
+                    currEvent.nextEventIds.set(triggerIndex, newChildEvent.eventId);
+                }
+                //dont forget the adventure counter is being updated, and needs to be saved as well
                 //saving could be done more efficiently, more targeted - but not going to worry about this for now
+                mDatabase.child("adventures").child(currAdventure.adventureKey).setValue(currAdventure);
+                currEvent = newChildEvent;
             }
             else {
                 //linking to an existing node
-                currEvent.actions.add(etTriggerWords.getText().toString().trim());
+                int nextEventId = nextNodeList.get(spinnerNextNode.getSelectedItemPosition());
 
-                String nextNodeNumber = ((String) spinnerNextNode.getSelectedItem()).split(" ")[0];
-                int nextEventId = Integer.valueOf(nextNodeNumber);
-                //Toast.makeText(getBaseContext(), nextNodeNumber, Toast.LENGTH_SHORT).show();
-
-                currEvent.nextEventIds.add(nextEventId);
+                if (isNewChildEvent) {
+                    currEvent.actions.add(triggerWords);
+                    currEvent.nextEventIds.add(nextEventId);
+                }
+                else {
+                    triggerIndex = currEvent.getTriggerWordsIndexFromChildEventId(nextEventId);
+                    currEvent.actions.set(triggerIndex, triggerWords);
+                    currEvent.nextEventIds.set(triggerIndex, nextEventId);
+                }
+                //saving could be done more efficiently, more targeted - but not going to worry about this for now
                 mDatabase.child("adventures").child(currAdventure.adventureKey).setValue(currAdventure);
+                currEvent = currAdventure.getEventFromEventListUsingEventId(nextEventId);
             }
+
+            //startActivity(new Intent(EditLinkToNextEventActivity.this, EditEventActivity.class));
             finish();
         }
     }

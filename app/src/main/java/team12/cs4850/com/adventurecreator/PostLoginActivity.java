@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
 public class PostLoginActivity extends MyBaseActivity {
 
     private TextView tvLoggedInAs;
@@ -61,6 +63,12 @@ public class PostLoginActivity extends MyBaseActivity {
         if (isSignedIn()) {
             FirebaseUser user = auth.getCurrentUser();
             tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
+
+            if (eventTypes == null) {
+                eventTypes = loadEventTypes();
+
+            }
+
         }
     }
 

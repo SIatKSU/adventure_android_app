@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:background="#f0f0f0"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName|textCapWords"
             android:lines="1"
             android:maxLength="32"
             android:nextFocusDown="@+id/etDescription"
@@ -101,7 +101,7 @@
             android:scrollbars="vertical"
             app:layout_constraintTop_toBottomOf="@+id/childNodeRecyclerLabel"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:listitem="@layout/event_list_item"
+            tools:listitem="@layout/childevent_list_item"
             />
 
 

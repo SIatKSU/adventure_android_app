@@ -57,7 +57,7 @@
             android:parentActivityName=".EventListActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".AddChildEventActivity"
+            android:name=".EditLinkToNextEventActivity"
             android:label="@string/AddChildEventActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".EditEventActivity"

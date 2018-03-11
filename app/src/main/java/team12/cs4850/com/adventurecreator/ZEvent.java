@@ -50,4 +50,25 @@ public class ZEvent {
         actions = new ArrayList<>();
         nextEventIds = new ArrayList<>();
     }
+
+    @Exclude
+    public int getTriggerWordsIndexFromChildEventId(int childEventId) {
+        for (int i = 0; i < nextEventIds.size(); i++) {
+            if (nextEventIds.get(i) == childEventId) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Exclude
+    public String getTriggerWordsFromChildEventId(int childEventId) {
+        for (int i = 0; i < nextEventIds.size(); i++) {
+            if (nextEventIds.get(i) == childEventId) {
+                return actions.get(i);
+            }
+        }
+        return null;
+    }
+
 }

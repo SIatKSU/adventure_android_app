@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 //based on https://stackoverflow.com/questions/32367041/calling-toolbar-on-each-activity
 
 public abstract class MyBaseActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener  {
@@ -25,8 +27,27 @@ public abstract class MyBaseActivity extends AppCompatActivity implements Fireba
     protected DatabaseReference mDatabase;
     protected FirebaseAuth auth;
 
+
+    //***************global variables*********************
     static ZAdventure currAdventure;
-    static boolean isNew = false;
+    static ZEvent currEvent;
+    static boolean isNewAdventure = false;
+
+    static boolean isNewChildEvent = false;
+    static ZEvent currChildEvent;
+
+    //eventTypes is loaded for each user.
+    //there is the built-in set, with the possibility of users adding their own custom sets.
+    //eventTypes set to null when you logout
+    //eventTypes reloaded on login (in PostLoginActivity)
+    static ArrayList<String> eventTypes;
+
+    static ArrayList<String> loadEventTypes () {
+        ArrayList<String> myEventTypes = new ArrayList<>();
+        //load the built-in types
+        myEventTypes.add(Constants.BASIC_EVENT_STRING);
+        return myEventTypes;
+    }
 
 
     @Override
@@ -134,6 +155,7 @@ public abstract class MyBaseActivity extends AppCompatActivity implements Fireba
             //attachRecyclerViewAdapter();
         }
         else {
+            eventTypes = null;      //need to reload for each user
             startActivity(new Intent(getBaseContext(), StartActivity.class));
             finish();
             //Toast.makeText(this, R.string.signing_in, Toast.LENGTH_SHORT).show();

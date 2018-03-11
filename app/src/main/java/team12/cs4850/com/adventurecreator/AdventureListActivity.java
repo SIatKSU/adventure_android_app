@@ -3,7 +3,6 @@ package team12.cs4850.com.adventurecreator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -95,8 +94,8 @@ public class AdventureListActivity extends MyBaseActivity {
             case R.id.btnNew:
                 currAdventure = null;
                 editAdventureIntent = new Intent(AdventureListActivity.this, EditOrCreateAdventureActivity.class);
-                //editAdventureIntent.putExtra("isNew", true);
-                isNew = true;
+                //editAdventureIntent.putExtra("isNewAdventure", true);
+                isNewAdventure = true;
                 startActivity(editAdventureIntent);
                 break;
             case R.id.btnEdit:
@@ -104,8 +103,8 @@ public class AdventureListActivity extends MyBaseActivity {
                 if (zAdventureAdapter.selected_position != RecyclerView.NO_POSITION) {
                     currAdventure = adventureList.get(zAdventureAdapter.selected_position);
                     editAdventureIntent = new Intent(AdventureListActivity.this, EditOrCreateAdventureActivity.class);
-                    //editAdventureIntent.putExtra("isNew", false);
-                    isNew = false;
+                    //editAdventureIntent.putExtra("isNewAdventure", false);
+                    isNewAdventure = false;
                     startActivity(editAdventureIntent);
                 }
                 else {

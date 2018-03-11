@@ -42,7 +42,8 @@ public class ZEventAdapter extends RecyclerView.Adapter<ZEventAdapter.ZEventHold
         @Override
         public void onClick(View itemView) {
             Intent i = new Intent(itemView.getContext(), EditEventActivity.class);
-            i.putExtra("eventId", zEventList.get(getLayoutPosition()).eventId);
+            //i.putExtra("eventId", zEventList.get(getLayoutPosition()).eventId);
+            MyBaseActivity.currEvent = zEventList.get(getLayoutPosition());
             itemView.getContext().startActivity(i);
         }
 
@@ -67,11 +68,11 @@ public class ZEventAdapter extends RecyclerView.Adapter<ZEventAdapter.ZEventHold
 
     @Override
     public void onBindViewHolder(ZEventHolder holder, int position) {
-        ZEvent currEvent = zEventList.get(position);
+        ZEvent thisEvent = zEventList.get(position);
         try {
-            holder.tvEventId.setText(Integer.toString(currEvent.eventId));
-            holder.tvEventTitle.setText(currEvent.title);
-            holder.tvEventDescription.setText(currEvent.description);
+            holder.tvEventId.setText(Integer.toString(thisEvent.eventId));
+            holder.tvEventTitle.setText(thisEvent.title);
+            holder.tvEventDescription.setText(thisEvent.description);
         }
         catch (Exception ex) {
             String exceptString = ex.getMessage();

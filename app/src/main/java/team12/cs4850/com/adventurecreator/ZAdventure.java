@@ -1,5 +1,7 @@
 package team12.cs4850.com.adventurecreator;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +42,16 @@ public class ZAdventure {
         ZEvent newEvent = new ZEvent(title, description, eventCounter);
         events.add(newEvent);
         return newEvent;
+    }
+
+    @Exclude
+    public ZEvent getEventFromEventListUsingEventId(int id) {
+        for (ZEvent zEvent : events) {
+            if (zEvent.eventId == id) {
+                return zEvent;
+            }
+        }
+        return null;
     }
 
 }

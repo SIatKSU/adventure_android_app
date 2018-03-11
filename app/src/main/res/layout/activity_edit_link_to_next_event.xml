@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="team12.cs4850.com.adventurecreator.AddChildEventActivity">
+    tools:context="team12.cs4850.com.adventurecreator.EditLinkToNextEventActivity">
 
     <include layout="@layout/mytoolbar" />
 
@@ -60,13 +60,13 @@
             app:layout_constraintTop_toBottomOf="@+id/selectNextEventLabel" />
 
         <TextView
-            android:id="@+id/selectEventType"
+            android:id="@+id/tvEventType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:visibility="invisible"
             android:paddingLeft="4dp"
-            android:text="@string/SelectEventType"
+            android:text="@string/EventType"
             android:textSize="20sp"
             app:layout_constraintTop_toBottomOf="@id/spinnerNextNode"
             />
@@ -78,14 +78,14 @@
             android:visibility="invisible"
             android:prompt="@string/SelectEventType"
             android:spinnerMode="dialog"
-            app:layout_constraintTop_toBottomOf="@+id/selectEventType" />
+            app:layout_constraintTop_toBottomOf="@+id/tvEventType" />
 
         <Button
             android:id="@+id/btnSave"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:onClick="btnClick"
-            android:text="@string/Save"
+            android:text="@string/Next"
             android:textSize="18sp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"

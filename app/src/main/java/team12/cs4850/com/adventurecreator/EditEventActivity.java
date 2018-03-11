@@ -10,25 +10,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class EditEventActivity extends MyBaseActivity {
 
     private static final String TAG = "NewEventActivity";
-    private int eventId;
-    private ZEvent currEvent;
+    //private int eventId;
 
     private EditText etEventTitle, etDescription;
 
     private RecyclerView childEventRecycler;
     private ZChildEventAdapter zChildEventAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_new_event);
 
         etEventTitle = findViewById(R.id.etEventTitle);
         etDescription = findViewById(R.id.etDescription);
@@ -36,8 +30,6 @@ public class EditEventActivity extends MyBaseActivity {
 
         childEventRecycler.setHasFixedSize(true);
         LinearLayoutManager myLayoutMgr = new LinearLayoutManager(this);
-//        myLayoutMgr.setReverseLayout(true);
-//        myLayoutMgr.setStackFromEnd(true);
         childEventRecycler.setLayoutManager(myLayoutMgr);
 
     }
@@ -65,9 +57,9 @@ public class EditEventActivity extends MyBaseActivity {
                     currEvent.title = etEventTitle.getText().toString().trim();
                     currEvent.description = etDescription.getText().toString().trim();
                     mDatabase.child("adventures").child(currAdventure.adventureKey).child("events").setValue(currAdventure.events);
-
-                    Intent i = new Intent(EditEventActivity.this, AddChildEventActivity.class);
-                    i.putExtra("eventId", eventId);
+                    MyBaseActivity.isNewChildEvent = true;
+                    Intent i = new Intent(EditEventActivity.this, EditLinkToNextEventActivity.class);
+                    //i.putExtra("eventId", eventId);
                     startActivity(i);
                 }
                 return true;
@@ -91,12 +83,12 @@ public class EditEventActivity extends MyBaseActivity {
         super.onStart();
         if (isSignedIn()) {
 
-            eventId  = getIntent().getIntExtra("eventId", 0);
-            for (ZEvent zEvent: currAdventure.events) {
-                if (zEvent.eventId == eventId) {
-                    currEvent = zEvent;
-                }
-            }
+//            eventId  = getIntent().getIntExtra("eventId", 0);
+//            for (ZEvent zEvent: currAdventure.events) {
+//                if (zEvent.eventId == eventId) {
+//                    currEvent = zEvent;
+//                }
+//            }
 
             setTitle(getString(R.string.EditEvent) + " " + Integer.toString(currEvent.eventId));
             etEventTitle.setText(currEvent.title);
@@ -142,16 +134,7 @@ public class EditEventActivity extends MyBaseActivity {
 
     private void attachRecyclerViewAdapter() {
 
-        List<ZEvent> childEvents = new ArrayList<>();
-
-        for (Integer id:currEvent.nextEventIds) {
-            for (ZEvent zEvent:currAdventure.events) {
-                if (zEvent.eventId == id) {
-                    childEvents.add(zEvent);
-                }
-            }
-        }
-        zChildEventAdapter = new ZChildEventAdapter(childEvents);
+        zChildEventAdapter = new ZChildEventAdapter(currEvent);
         childEventRecycler.setAdapter(zChildEventAdapter);
     }
 

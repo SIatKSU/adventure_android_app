@@ -26,10 +26,6 @@ public class EventListActivity extends MyBaseActivity {
 
     private RecyclerView eventRecyclerView;
     private ZEventAdapter zEventAdapter;
-    //private ArrayList<ZEvent> eventList = new ArrayList<>();
-
-//    private Query query;
-//    private ValueEventListener myQueryListener;
 
     private static final String TAG = "EventListPage";
 
@@ -42,8 +38,6 @@ public class EventListActivity extends MyBaseActivity {
 
         eventRecyclerView.setHasFixedSize(true);
         LinearLayoutManager myLayoutMgr = new LinearLayoutManager(this);
-//        myLayoutMgr.setReverseLayout(true);
-//        myLayoutMgr.setStackFromEnd(true);
         eventRecyclerView.setLayoutManager(myLayoutMgr);
 
         adventureLabel.setText(currAdventure.adventureName);
@@ -92,95 +86,12 @@ public class EventListActivity extends MyBaseActivity {
     }
 
     public void btnClick(View view) {
-//        Intent editAdventureIntent;
-//        switch (view.getId()) {
-//            case R.id.btnNew:
-//                currAdventure = null;
-//                editAdventureIntent = new Intent(EventListActivity.this, EditOrCreateAdventureActivity.class);
-//                //editAdventureIntent.putExtra("isNew", true);
-//                isNew = true;
-//                startActivity(editAdventureIntent);
-//                break;
-//            case R.id.btnEdit:
-//
-//                if (zAdventureAdapter.selected_position != RecyclerView.NO_POSITION) {
-//                    currAdventure = adventureList.get(zAdventureAdapter.selected_position);
-//                    editAdventureIntent = new Intent(EventListActivity.this, EditOrCreateAdventureActivity.class);
-//                    //editAdventureIntent.putExtra("isNew", false);
-//                    isNew = false;
-//                    startActivity(editAdventureIntent);
-//                }
-//                else {
-//                    //Snackbar.make(view, getResources().getString(R.string.NoAdventureSelected), Snackbar.LENGTH_SHORT)
-//                    //        .setAction("Action", null).show();
-//                    Toast.makeText(this, getResources().getString(R.string.NoAdventureSelected), Toast.LENGTH_SHORT).show();
-//                }
-//                break;
-//            case R.id.btnDelete:
-//                if (zAdventureAdapter.selected_position != RecyclerView.NO_POSITION) {
-//                    currAdventure = adventureList.get(zAdventureAdapter.selected_position);
-//
-//                    android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(this)
-//                            .setTitle(getString(R.string.DeleteAdventure))
-//                            .setMessage(getString(R.string.AreYouSure))
-//                            .setCancelable(true)
-//                            .setNegativeButton(getString(android.R.string.cancel), null)
-//                            .setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    String adventureKey = currAdventure.adventureKey;
-//                                    mDatabase.child("adventures").child(adventureKey).removeValue();
-//                                    mDatabase.child("users").child(auth.getUid()).child("myAdventures").child(adventureKey).removeValue();
-//
-//                                }
-//                    });
-//                    android.app.AlertDialog confirmDialog = adb.create();
-//                    confirmDialog.show();
-//                }
-//                else {
-//                    //Snackbar.make(view, getResources().getString(R.string.NoAdventureSelected), Snackbar.LENGTH_SHORT)
-//                    //        .setAction("Action", null).show();
-//                    Toast.makeText(this, getResources().getString(R.string.NoAdventureSelected), Toast.LENGTH_SHORT).show();
-//                }
-//
-//                break;
-//        }
+
     }
 
     private void attachRecyclerViewAdapter() {
-
-
-//        if (myQueryListener != null) {
-//            query.removeEventListener(myQueryListener);
-//        }
-//
-//        query = mDatabase.child("adventures").orderByChild("userid").equalTo(auth.getUid());
-//
         zEventAdapter = new ZEventAdapter(currAdventure.events);
         eventRecyclerView.setAdapter(zEventAdapter);
-//
-//        myQueryListener = query.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                //Toast.makeText(getBaseContext(), "calling onDataChange", Toast.LENGTH_SHORT).show();
-//                adventureList = new ArrayList<>();
-//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                    ZAdventure zAdventure = postSnapshot.getValue(ZAdventure.class);
-//                    adventureList.add(zAdventure);
-//
-//                    zAdventureAdapter.updateList(adventureList);
-//                    //mEmptyListMessage.setText(getResources().getString(R.string.no_items));
-//                    //mEmptyListMessage.setVisibility(!dataSnapshot.hasChildren() ? View.VISIBLE : View.GONE);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-//                // ...
-//            }
-//        });
     }
 
 

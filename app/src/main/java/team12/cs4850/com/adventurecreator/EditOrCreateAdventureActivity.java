@@ -14,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class EditOrCreateAdventureActivity extends MyBaseActivity {
 
@@ -23,7 +22,7 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
 
     private Spinner spinnerAdventureType;
 
-    //private boolean isNew;
+    //private boolean isNewAdventure;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +42,9 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
         //spinnerAdventureType.setOnItemSelectedListener(spinnerListener);
 
 
-        //isNew  = getIntent().getBooleanExtra("isNew", false);
-        //Toast.makeText(this, Boolean.toString(isNew), Toast.LENGTH_SHORT).show();
-        if (!isNew) {
+        //isNewAdventure  = getIntent().getBooleanExtra("isNewAdventure", false);
+        //Toast.makeText(this, Boolean.toString(isNewAdventure), Toast.LENGTH_SHORT).show();
+        if (!isNewAdventure) {
             setTitle(getString(R.string.EditAdventure));
 
             spinnerAdventureType.setSelection(currAdventure.adventureType);
@@ -126,7 +125,7 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
                         //we could check here if adventureName is duplicate
 
                         String adventureKey;
-                        if (isNew) {
+                        if (isNewAdventure) {
                             adventureKey = mDatabase.child("adventures").push().getKey();
                             currAdventure = new ZAdventure(auth.getUid(), adventureName, adventureDescription, adventureKey, spinnerAdventureType.getSelectedItemPosition());
                             mDatabase.child("users").child(auth.getUid()).child("myAdventures").child(adventureKey).setValue(true);
@@ -143,7 +142,7 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
                             ZEvent startNode = currAdventure.AddNewEvent("Starting event", "Replace with your description");
                         }
                         mDatabase.child("adventures").child(adventureKey).setValue(currAdventure);
-                        isNew = false;
+                        isNewAdventure = false;
 
                         startActivity(new Intent(EditOrCreateAdventureActivity.this, EventListActivity.class));
                         //finish();
