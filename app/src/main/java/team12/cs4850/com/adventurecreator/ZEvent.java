@@ -56,6 +56,8 @@ public class ZEvent {
         prevEventIds = new ArrayList<>();
     }
 
+
+
     @Exclude
     public int getIndexFromChildEventId(int childEventId) {
         for (int i = 0; i < nextEventIds.size(); i++) {

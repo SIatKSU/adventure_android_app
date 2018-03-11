@@ -107,9 +107,10 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_addchildevent, menu);
-        if (isNewChildEvent) {
-            menu.findItem(R.id.action_delete).setVisible(false);
-        }
+//        menu.findItem(R.id.action_delete).setVisible(false);
+//        if (isNewChildEvent) {
+//            menu.findItem(R.id.action_delete).setVisible(false);
+//        }
         return true;
     }
 

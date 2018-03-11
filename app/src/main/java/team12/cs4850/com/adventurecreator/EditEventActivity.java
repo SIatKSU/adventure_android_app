@@ -93,11 +93,14 @@ public class EditEventActivity extends MyBaseActivity {
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     //remove references to currEvent
+                                    int index;
                                     ZEvent parentEventToUpdate;
                                     if ((currEvent.prevEventIds != null) && (currEvent.prevEventIds.size() != 0)) {
                                         for (int zPrevEventId: currEvent.prevEventIds) {
                                             parentEventToUpdate = currAdventure.getEventFromEventListUsingEventId(zPrevEventId);
-                                            parentEventToUpdate.nextEventIds.remove((Integer) currEvent.eventId);
+                                            index = parentEventToUpdate.nextEventIds.indexOf((Integer) currEvent.eventId);
+                                            parentEventToUpdate.nextEventIds.remove(index);
+                                            parentEventToUpdate.nextActions.remove(index);
                                         }
                                     }
                                     currAdventure.events.remove(currEvent);
