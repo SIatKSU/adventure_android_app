@@ -7,6 +7,7 @@ package team12.cs4850.com.adventurecreator;
 public class Constants {
 
     public static final String SAVED_PREFERENCES = "SavedPreferences";
+    public static final String AMAZON_EMAIL = "AmazonEmail";
 
 
     //Adventure Types

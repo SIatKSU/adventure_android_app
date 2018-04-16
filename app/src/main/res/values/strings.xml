@@ -88,4 +88,6 @@
     <string name="CantDeleteEventMessage">You can\'t delete events that have children.</string>
     <string name="CantDeleteStartNode">You can\'t delete the starting event.</string>
 
+    <string name="Required">Required</string>
+    <string name="InvalidEmailMessage">Please enter a valid email address</string>
 </resources>

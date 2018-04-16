@@ -28,8 +28,7 @@ public class AdventureListActivity extends MyBaseActivity {
     private ZAdventureAdapter zAdventureAdapter;
     private ArrayList<ZAdventure> adventureList = new ArrayList<>();
 
-    private Query query;
-    private ValueEventListener myQueryListener;
+    //private ValueEventListener myQueryListener;
 
     private static final String TAG = "AdventureListPage";
 
@@ -146,16 +145,17 @@ public class AdventureListActivity extends MyBaseActivity {
 
     private void attachRecyclerViewAdapter() {
 
-        if (myQueryListener != null) {
-            query.removeEventListener(myQueryListener);
-        }
+        //if (myQueryListener != null) {
+        //    query.removeEventListener(myQueryListener);
+        //}
 
-        query = mDatabase.child("adventures").orderByChild("userid").equalTo(auth.getUid());
+        Query query = mDatabase.child("adventures").orderByChild("userid").equalTo(auth.getUid());
 
         zAdventureAdapter = new ZAdventureAdapter(adventureList);
         adventureRecyclerView.setAdapter(zAdventureAdapter);
 
-        myQueryListener = query.addValueEventListener(new ValueEventListener() {
+        //myQueryListener = query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Toast.makeText(getBaseContext(), "calling onDataChange", Toast.LENGTH_SHORT).show();

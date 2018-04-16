@@ -3,7 +3,6 @@ package team12.cs4850.com.adventurecreator;
 import com.google.firebase.database.Exclude;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by siatk on 3/3/2018.
@@ -12,14 +11,23 @@ import java.util.List;
 //storage class for an Adventure in Firebase
 public class ZAdventure {
     public String userid;
+    public String amazonEmail;  //for convenience - user's amazon linked email address
     public String adventureKey; //for convenience - the String under which it is stored in Firebase
     public String adventureName;
     public String adventureDescription;
     public long dateModified;    //long currDate = System.currentTimeMillis();     //use mDate = Date(currDate) to get it back.
     public int adventureType;
 
-    public List<ZEvent> events;
     public int eventCounter = 0;
+
+    public ArrayList<ZEvent> events;
+
+    public ArrayList<ZEvent> getEvents() {
+        return events;
+    }
+    public void setEvents(ArrayList<ZEvent> events) {
+        this.events = events;
+    }
 
 
     public ZAdventure() {
@@ -37,6 +45,7 @@ public class ZAdventure {
         events = new ArrayList<>();
     }
 
+    @Exclude
     public ZEvent AddNewEvent(String title, String description) {
         ++eventCounter;  //start at one
         ZEvent newEvent = new ZEvent(title, description, eventCounter);

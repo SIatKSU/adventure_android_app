@@ -76,6 +76,7 @@
             android:lines="3"
             android:maxLength="256"
             android:nextFocusDown="@+id/btnSave"
+            android:imeOptions="actionDone"
             android:textSize="24sp"
             android:paddingLeft="4dp"
             android:hint="@string/AdventureDescriptionHint"
