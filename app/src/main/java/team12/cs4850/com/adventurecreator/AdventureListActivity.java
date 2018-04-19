@@ -28,8 +28,6 @@ public class AdventureListActivity extends MyBaseActivity {
     private ZAdventureAdapter zAdventureAdapter;
     private ArrayList<ZAdventure> adventureList = new ArrayList<>();
 
-    //private ValueEventListener myQueryListener;
-
     private static final String TAG = "AdventureListPage";
 
     @Override
@@ -73,7 +71,6 @@ public class AdventureListActivity extends MyBaseActivity {
             case R.id.btnNew:
                 currAdventure = null;
                 editAdventureIntent = new Intent(AdventureListActivity.this, EditOrCreateAdventureActivity.class);
-                //editAdventureIntent.putExtra("isNewAdventure", true);
                 isNewAdventure = true;
                 startActivity(editAdventureIntent);
                 break;
@@ -82,7 +79,6 @@ public class AdventureListActivity extends MyBaseActivity {
                 if (zAdventureAdapter.selected_position != RecyclerView.NO_POSITION) {
                     currAdventure = adventureList.get(zAdventureAdapter.selected_position);
                     editAdventureIntent = new Intent(AdventureListActivity.this, EditOrCreateAdventureActivity.class);
-                    //editAdventureIntent.putExtra("isNewAdventure", false);
                     isNewAdventure = false;
                     startActivity(editAdventureIntent);
                 }
@@ -125,36 +121,21 @@ public class AdventureListActivity extends MyBaseActivity {
 
     private void attachRecyclerViewAdapter() {
 
-        //if (myQueryListener != null) {
-        //    query.removeEventListener(myQueryListener);
-        //}
-
         Query query = mDatabase.child("adventures").orderByChild("userid").equalTo(auth.getUid());
 
         zAdventureAdapter = new ZAdventureAdapter(adventureList);
         adventureRecyclerView.setAdapter(zAdventureAdapter);
 
-        //myQueryListener = query.addValueEventListener(new ValueEventListener() {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Toast.makeText(getBaseContext(), "calling onDataChange", Toast.LENGTH_SHORT).show();
                 adventureList = new ArrayList<>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     ZAdventure zAdventure = postSnapshot.getValue(ZAdventure.class);
                     adventureList.add(zAdventure);
-
                     zAdventureAdapter.updateList(adventureList);
-                    //mEmptyListMessage.setText(getResources().getString(R.string.no_items));
-                    //mEmptyListMessage.setVisibility(!dataSnapshot.hasChildren() ? View.VISIBLE : View.GONE);
                 }
-
-                if (adventureList.isEmpty()) {
-                    tvNoAdventuresFound.setVisibility(View.VISIBLE);
-                }
-                else {
-                    tvNoAdventuresFound.setVisibility(View.GONE);
-                }
+                tvNoAdventuresFound.setVisibility(adventureList.isEmpty() ? View.VISIBLE : View.GONE);
             }
 
             @Override

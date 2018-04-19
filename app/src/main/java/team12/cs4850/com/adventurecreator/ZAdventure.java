@@ -11,7 +11,6 @@ import java.util.ArrayList;
 //storage class for an Adventure in Firebase
 public class ZAdventure {
     public String userid;
-    public String amazonEmail;  //for convenience - user's amazon linked email address
     public String adventureKey; //for convenience - the String under which it is stored in Firebase
     public String adventureName;
     public String adventureDescription;

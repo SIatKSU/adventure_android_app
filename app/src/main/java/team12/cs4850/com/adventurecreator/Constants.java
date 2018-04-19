@@ -15,7 +15,7 @@ public class Constants {
 
     //Adventure Types
     public static final int SIMPLE_ADVENTURE = 0;
-    //public static final int TREE_ADVENTURE = 1;
+    public static final int FIGHTY_ADVENTURE = 1;
 
     //Event Types
     public static final int BASIC_EVENT = 0;

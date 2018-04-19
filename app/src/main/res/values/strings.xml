@@ -19,9 +19,8 @@
 
 
     <string-array name="adventureTypeArray">
-        <item>Simple Adventure</item>
-        <item>Advanced Adventure</item>
-        <item>Customized Events Adventure</item>
+        <item>Simple</item>
+        <item>Fighty</item>
     </string-array>
 
 

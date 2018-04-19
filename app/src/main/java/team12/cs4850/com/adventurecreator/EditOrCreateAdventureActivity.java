@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -17,45 +18,54 @@ import java.util.ArrayList;
 
 public class EditOrCreateAdventureActivity extends MyBaseActivity {
 
-    private TextView adventureTypeLabel;
     private EditText mAdventureName, mAdventureDescription;
+    private RadioGroup rgAdventureType;
 
-    private Spinner spinnerAdventureType;
+    private RadioGroup.OnCheckedChangeListener myRGListener;
 
-    //private boolean isNewAdventure;
+    private TextView labelPlayerHealth, labelWeaponName, labelMinDamage, labelMaxDamage;
+    private EditText mPlayerHealth, mWeaponName, mMinDamage, mMaxDamage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAdventureName = findViewById(R.id.etAdventureName);
         mAdventureDescription = findViewById(R.id.etAdventureDescription);
-        spinnerAdventureType = findViewById(R.id.spinnerAdventureType);
-        adventureTypeLabel = findViewById(R.id.adventureTypeLabel);
+        rgAdventureType = findViewById(R.id.rgAdventureType);
 
-        ArrayAdapter<String> adventureTypeAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.adventureTypeArray));
-        adventureTypeAdapter.setDropDownViewResource(R.layout.my_spinner_layout);
-        spinnerAdventureType.setAdapter(adventureTypeAdapter);
+        labelPlayerHealth = findViewById(R.id.labelStartingHP);
+        labelWeaponName = findViewById(R.id.labelWeaponName);
+        labelMinDamage = findViewById(R.id.labelMinDamage);
+        labelMaxDamage = findViewById(R.id.labelMaxDamage);
 
-        //SpinnerInteractionListener spinnerListener = new SpinnerInteractionListener();
-        //spinnerAdventureType.setOnTouchListener(spinnerListener);
-        //spinnerAdventureType.setOnItemSelectedListener(spinnerListener);
+        mPlayerHealth = findViewById(R.id.mPlayerHealth);
+        mWeaponName = findViewById(R.id.mWeaponName);
+        mMinDamage = findViewById(R.id.mMinDamage);
+        mMaxDamage = findViewById(R.id.mMaxDamage);
 
+        myRGListener = new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rbFighty:
+                        setAdventureType(Constants.FIGHTY_ADVENTURE);
+                        break;
+                    case R.id.rbSimple:
+                    default:
+                        setAdventureType(Constants.SIMPLE_ADVENTURE);
+                        break;
+                }
+            }
+        };
 
-        //isNewAdventure  = getIntent().getBooleanExtra("isNewAdventure", false);
-        //Toast.makeText(this, Boolean.toString(isNewAdventure), Toast.LENGTH_SHORT).show();
+        rgAdventureType.setOnCheckedChangeListener(myRGListener);
+
         if (!isNewAdventure) {
             setTitle(getString(R.string.EditAdventure));
-
-            spinnerAdventureType.setSelection(currAdventure.adventureType);
-            spinnerAdventureType.setVisibility(View.INVISIBLE);
-            adventureTypeLabel.setVisibility(View.INVISIBLE);
-
             mAdventureName.setText(currAdventure.adventureName);
             mAdventureDescription.setText(currAdventure.adventureDescription);
-
+            setAdventureType(currAdventure.adventureType);
         }
-
     }
 
     @Override
@@ -70,6 +80,45 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
             //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         }
     }
+
+    private int getAdventureType() {
+        switch (rgAdventureType.getCheckedRadioButtonId()) {
+            case R.id.rbFighty:
+                return Constants.FIGHTY_ADVENTURE;
+            case R.id.rbSimple:
+            default:
+                return Constants.SIMPLE_ADVENTURE;
+        }
+    }
+
+    private void setAdventureType(int adventureType) {
+        switch (adventureType) {
+            case Constants.FIGHTY_ADVENTURE:
+                rgAdventureType.check(R.id.rbFighty);
+                labelPlayerHealth.setVisibility(View.VISIBLE);
+                labelWeaponName.setVisibility(View.VISIBLE);
+                labelMinDamage.setVisibility(View.VISIBLE);
+                labelMaxDamage.setVisibility(View.VISIBLE);
+                mPlayerHealth.setVisibility(View.VISIBLE);
+                mWeaponName.setVisibility(View.VISIBLE);
+                mMinDamage.setVisibility(View.VISIBLE);
+                mMaxDamage.setVisibility(View.VISIBLE);
+                break;
+            case Constants.SIMPLE_ADVENTURE:
+            default:
+                rgAdventureType.check(R.id.rbSimple);
+                labelPlayerHealth.setVisibility(View.INVISIBLE);
+                labelWeaponName.setVisibility(View.INVISIBLE);
+                labelMinDamage.setVisibility(View.INVISIBLE);
+                labelMaxDamage.setVisibility(View.INVISIBLE);
+                mPlayerHealth.setVisibility(View.INVISIBLE);
+                mWeaponName.setVisibility(View.INVISIBLE);
+                mMinDamage.setVisibility(View.INVISIBLE);
+                mMaxDamage.setVisibility(View.INVISIBLE);
+                break;
+        }
+    }
+
 
     @Override
     protected void onStop() {
@@ -87,83 +136,81 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
                     mAdventureName.setError("Required.");
                     mAdventureName.clearFocus();
                     mAdventureName.requestFocus();
-                }
-                else {
-                    mAdventureName.setError(null);
-
-                    String adventureDescription = mAdventureDescription.getText().toString().trim();
-                    if (TextUtils.isEmpty(adventureDescription)) {
-                        mAdventureDescription.setError("Required.");
-                        mAdventureDescription.clearFocus();
-                        mAdventureDescription.requestFocus();
-                    }
-
-                    else {
-
-                        mAdventureDescription.setError(null);
-
-                        //we could check here if adventureName is duplicate
-
-                        String adventureKey;
-                        if (isNewAdventure) {
-                            adventureKey = mDatabase.child("adventures").push().getKey();
-                            currAdventure = new ZAdventure(auth.getUid(), adventureName, adventureDescription, adventureKey, spinnerAdventureType.getSelectedItemPosition());
-                            mDatabase.child("users").child(auth.getUid()).child("myAdventures").child(adventureKey).setValue(true);
-                        }
-                        else {
-                            adventureKey = currAdventure.adventureKey;
-                            currAdventure.adventureName = adventureName;
-                            currAdventure.adventureDescription = adventureDescription;
-                        }
-
-                        //if currAdventure has no starting event, add one
-                        if ((currAdventure.events == null) || (currAdventure.events.size() == 0)) {
-                            currAdventure.events = new ArrayList<ZEvent>();
-                            ZEvent startNode = currAdventure.AddNewEvent("Starting event", "Replace with your description");
-                        }
-                        mDatabase.child("adventures").child(adventureKey).setValue(currAdventure);
-                        isNewAdventure = false;
-
-                        startActivity(new Intent(EditOrCreateAdventureActivity.this, EventListActivity.class));
-                        //finish();
-                    }
+                    return;
                 }
 
+                mAdventureName.setError(null);
+
+                String adventureDescription = mAdventureDescription.getText().toString().trim();
+                if (TextUtils.isEmpty(adventureDescription)) {
+                    mAdventureDescription.setError("Required.");
+                    mAdventureDescription.clearFocus();
+                    mAdventureDescription.requestFocus();
+                    return;
+                }
+
+                mAdventureDescription.setError(null);
+
+                int adventureType = getAdventureType();
+
+                if (adventureType == Constants.FIGHTY_ADVENTURE) {
+                    String playerHealth = mPlayerHealth.getText().toString().trim();
+                    if (TextUtils.isEmpty(playerHealth)) {
+                        mPlayerHealth.setError("Required.");
+                        mPlayerHealth.clearFocus();
+                        mPlayerHealth.requestFocus();
+                        return;
+                    }
+
+                    String weaponName = mWeaponName.getText().toString().trim();
+                    if (TextUtils.isEmpty(weaponName)) {
+                        mWeaponName.setError("Required.");
+                        mWeaponName.clearFocus();
+                        mWeaponName.requestFocus();
+                        return;
+                    }
+
+                    String minDamage = mMinDamage.getText().toString().trim();
+                    if (TextUtils.isEmpty(minDamage)) {
+                        mMinDamage.setError("Required.");
+                        mMinDamage.clearFocus();
+                        mMinDamage.requestFocus();
+                        return;
+                    }
+
+                    String maxDamage = mMaxDamage.getText().toString().trim();
+                    if (TextUtils.isEmpty(maxDamage)) {
+                        mMaxDamage.setError("Required.");
+                        mMaxDamage.clearFocus();
+                        mMaxDamage.requestFocus();
+                        return;
+                    }
+                }
+
+                String adventureKey;
+                if (isNewAdventure) {
+                    adventureKey = mDatabase.child("adventures").push().getKey();
+                    currAdventure = new ZAdventure(auth.getUid(), adventureName, adventureDescription, adventureKey, adventureType);
+                    mDatabase.child("users").child(auth.getUid()).child("myAdventures").child(adventureKey).setValue(true);
+                } else {
+                    adventureKey = currAdventure.adventureKey;
+                    currAdventure.adventureName = adventureName;
+                    currAdventure.adventureDescription = adventureDescription;
+                    currAdventure.adventureType = adventureType;
+                }
+
+                //if currAdventure has no starting event, add one
+                if ((currAdventure.events == null) || (currAdventure.events.size() == 0)) {
+                    currAdventure.events = new ArrayList<ZEvent>();
+                    ZEvent startNode = currAdventure.AddNewEvent("Starting event", "Replace with your description");
+                }
+                mDatabase.child("adventures").child(adventureKey).setValue(currAdventure);
+                isNewAdventure = false;
+
+                startActivity(new Intent(EditOrCreateAdventureActivity.this, EventListActivity.class));
                 break;
         }
     }
-
-    //custom spinner class that doesn't trigger the onItemSelected method if spinner value is programmatically changed (default spinner is so annoying!)
-    class SpinnerInteractionListener implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
-        boolean userSelect = false;
-
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            userSelect = true;
-            return false;
-        }
-
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            if (userSelect) {
-                userSelect = false;
-                switch (parent.getId()) {
-//                    case R.id.spinnerPackRule:
-//                        //warn user about not having DeviceID
-//                        if ((pos == Constants.PackRuleDateSequence) || (pos == Constants.PackRuleSequence)) {
-//                            Toast.makeText(getBaseContext(), "Use of a Pack Rule without DeviceID is not recommended.", Toast.LENGTH_SHORT).show();
-//                        }
-//                        hideAndShowElements();
-//                        setupAndgenPackNumber();
-//                        break;
-                }
-            }
-        }
-
-        public void onNothingSelected(AdapterView<?> parent) {
-        }
-    }
-
-
 }
+
 
