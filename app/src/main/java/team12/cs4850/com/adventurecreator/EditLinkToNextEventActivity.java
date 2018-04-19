@@ -151,7 +151,7 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
             case R.id.btnSave:
                 tryToSaveChildEvent();
                 break;
-            case R.id.btnCancel:
+            case R.id.btnExit:
                 finish();
                 break;
         }

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class AdventureListActivity extends MyBaseActivity {
 
-    private TextView tvLoggedInAs;
+    private TextView tvLoggedInAs, tvNoAdventuresFound;
 
     private RecyclerView adventureRecyclerView;
     private ZAdventureAdapter zAdventureAdapter;
@@ -36,6 +36,7 @@ public class AdventureListActivity extends MyBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tvLoggedInAs = findViewById(R.id.tvUsername);
+        tvNoAdventuresFound = findViewById(R.id.tvNoAdventuresFound);
         adventureRecyclerView = findViewById(R.id.mAdventureRecycler);
 
         adventureRecyclerView.setHasFixedSize(true);
@@ -52,32 +53,11 @@ public class AdventureListActivity extends MyBaseActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.mainmenu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.action_signout:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
-    @Override
     public void onStart() {
         super.onStart();
         if (isSignedIn()) {
             FirebaseUser user = auth.getCurrentUser();
             tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
-
             attachRecyclerViewAdapter();
         }
     }
@@ -167,6 +147,13 @@ public class AdventureListActivity extends MyBaseActivity {
                     zAdventureAdapter.updateList(adventureList);
                     //mEmptyListMessage.setText(getResources().getString(R.string.no_items));
                     //mEmptyListMessage.setVisibility(!dataSnapshot.hasChildren() ? View.VISIBLE : View.GONE);
+                }
+
+                if (adventureList.isEmpty()) {
+                    tvNoAdventuresFound.setVisibility(View.VISIBLE);
+                }
+                else {
+                    tvNoAdventuresFound.setVisibility(View.GONE);
                 }
             }
 

@@ -64,26 +64,6 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.mainmenu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.action_signout:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
-    @Override
     public void onStart() {
         super.onStart();
         if (isSignedIn()) {
@@ -98,7 +78,7 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
 
     public void btnClick(View view) {
         switch (view.getId()) {
-            case R.id.btnCancel:
+            case R.id.btnExit:
                 finish();
                 break;
             case R.id.btnSave:

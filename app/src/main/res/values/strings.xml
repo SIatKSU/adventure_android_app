@@ -28,7 +28,7 @@
     <string name="PostLoginActivity">Adventure Creator</string>
     <string name="action_signout">Sign Out</string>
 
-    <string name="SetupProfileTitle">Setup User Profile</string>
+    <string name="SetupProfileTitle">Link to Amazon</string>
     <string name="Name">Name</string>
     <string name="NameHint">Enter Name</string>
     <string name="Password">Password</string>
@@ -90,4 +90,7 @@
 
     <string name="Required">Required</string>
     <string name="InvalidEmailMessage">Please enter a valid email address</string>
+
+    <string name="PlsLinkAmazonFirstMsg">Please link to your Amazon account first.</string>
+    <string name="NoAdventuresFound">No adventures found.  Go ahead and create an adventure!</string>
 </resources>

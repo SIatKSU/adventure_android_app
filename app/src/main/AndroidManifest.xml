@@ -27,7 +27,7 @@
             android:parentActivityName=".StartActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".SetupProfileActivity"
+            android:name=".AmazonLinkActivity"
             android:label="@string/SetupProfileTitle"
             android:launchMode="singleTask"
             android:parentActivityName=".PostLoginActivity"

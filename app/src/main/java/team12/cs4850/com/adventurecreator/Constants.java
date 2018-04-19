@@ -7,7 +7,10 @@ package team12.cs4850.com.adventurecreator;
 public class Constants {
 
     public static final String SAVED_PREFERENCES = "SavedPreferences";
-    public static final String AMAZON_EMAIL = "AmazonEmail";
+    //public static final String AMAZON_EMAIL = "AmazonEmail";
+
+    public static final String ACCOUNT_LINK_CHECKED = "AccountLinkChecked";
+    public static final String ACCOUNT_LINKED = "AccountLinked";
 
 
     //Adventure Types

@@ -75,7 +75,6 @@
             android:inputType="textMultiLine|textCapSentences"
             android:lines="3"
             android:maxLength="256"
-            android:nextFocusDown="@+id/btnSave"
             android:imeOptions="actionDone"
             android:textSize="24sp"
             android:paddingLeft="4dp"
@@ -113,11 +112,11 @@
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnCancel"
+            app:layout_constraintEnd_toStartOf="@+id/btnExit"
             app:layout_constraintHorizontal_bias="0.5"/>
 
         <Button
-            android:id="@+id/btnCancel"
+            android:id="@+id/btnExit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:onClick="btnClick"

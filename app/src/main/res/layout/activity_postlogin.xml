@@ -45,9 +45,10 @@
 
 
         <Button
-            android:id="@+id/btnSetupProfile"
+            android:id="@+id/btnAmazonLink"
             android:layout_width="0dp"
             android:layout_height="67dp"
+            android:textSize="18sp"
             android:text="@string/SetupProfileTitle"
             android:layout_marginTop="10dp"
             android:onClick="btnClick"
@@ -59,10 +60,11 @@
             android:id="@+id/btnAdventureCreator"
             android:layout_width="0dp"
             android:layout_height="67dp"
+            android:textSize="18sp"
             android:text="@string/AdventureListTitle"
             android:layout_marginTop="10dp"
             android:onClick="btnClick"
-            app:layout_constraintTop_toBottomOf="@+id/btnSetupProfile"
+            app:layout_constraintTop_toBottomOf="@+id/btnAmazonLink"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />

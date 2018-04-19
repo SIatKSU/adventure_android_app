@@ -1,24 +1,24 @@
 package team12.cs4850.com.adventurecreator;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.ArrayList;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class PostLoginActivity extends MyBaseActivity {
 
     private TextView tvLoggedInAs;
+    private String amazonEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +66,9 @@ public class PostLoginActivity extends MyBaseActivity {
 
             if (eventTypes == null) {
                 eventTypes = loadEventTypes();
-
             }
 
+            //amazonEmail = MyApplication.savedInfo.getString(Constants.AMAZON_EMAIL, "");
         }
     }
 
@@ -79,9 +79,45 @@ public class PostLoginActivity extends MyBaseActivity {
 
     public void btnClick(View view) {
         switch (view.getId()) {
+            case R.id.btnAmazonLink:
+                boolean isAccountLinked = MyApplication.savedInfo.getBoolean(Constants.ACCOUNT_LINKED, false);
+                if (isAccountLinked) {
+                    Toast.makeText(PostLoginActivity.this, "Your account is already linked.", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    boolean checkedAccountLink = MyApplication.savedInfo.getBoolean(Constants.ACCOUNT_LINK_CHECKED, false);
+                    if (checkedAccountLink) {
+                        startActivity(new Intent(PostLoginActivity.this, AmazonLinkActivity.class));
+                    }
+                    else {
+                        //if its a reinstall, Shared Pref won't be set.  and we need to check the account link.
+                        Query query = mDatabase.child("linkedUserAccounts").orderByValue().equalTo(auth.getUid());
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                SharedPreferences.Editor editor = MyApplication.savedInfo.edit();
+                                editor.putBoolean(Constants.ACCOUNT_LINK_CHECKED, true);
+                                editor.apply();
+                                if (dataSnapshot.exists()) {
+                                    editor = MyApplication.savedInfo.edit();
+                                    editor.putBoolean(Constants.ACCOUNT_LINKED, true);
+                                    editor.apply();
+                                    Toast.makeText(PostLoginActivity.this, "Your account is already linked.", Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    //Toast.makeText(PostLoginActivity.this, "didn't find link", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(PostLoginActivity.this, AmazonLinkActivity.class));
+                                }
+                            }
 
-            case R.id.btnSetupProfile:
-                startActivity(new Intent(PostLoginActivity.this, SetupProfileActivity.class));
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                // Getting Post failed, log a message
+                                System.out.println("something went wrong...database error");
+                            }
+                        });
+                    }
+                }
                 break;
             case R.id.btnAdventureCreator:
                 startActivity(new Intent(PostLoginActivity.this, AdventureListActivity.class));

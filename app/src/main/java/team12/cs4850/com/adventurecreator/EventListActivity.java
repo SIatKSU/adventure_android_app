@@ -41,7 +41,6 @@ public class EventListActivity extends MyBaseActivity {
         eventRecyclerView.setLayoutManager(myLayoutMgr);
 
         adventureLabel.setText(currAdventure.adventureName);
-
     }
 
     @Override
@@ -50,32 +49,9 @@ public class EventListActivity extends MyBaseActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.mainmenu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.action_signout:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
-    @Override
     public void onStart() {
         super.onStart();
         if (isSignedIn()) {
-//            FirebaseUser user = auth.getCurrentUser();
-//            tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
-//
             attachRecyclerViewAdapter();
         }
     }

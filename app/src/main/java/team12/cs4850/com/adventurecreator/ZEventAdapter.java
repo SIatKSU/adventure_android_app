@@ -25,15 +25,12 @@ public class ZEventAdapter extends RecyclerView.Adapter<ZEventAdapter.ZEventHold
     public class ZEventHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private TextView tvEventId, tvEventTitle, tvEventDescription;
-        private ImageButton btnEdit;
 
         public ZEventHolder(View itemView) {
             super(itemView);
             tvEventId = itemView.findViewById(R.id.eventId);
             tvEventTitle = itemView.findViewById(R.id.eventTitle);
             tvEventDescription = itemView.findViewById(R.id.eventDescription);
-
-            btnEdit = itemView.findViewById(R.id.btnEdit);
 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -42,14 +39,12 @@ public class ZEventAdapter extends RecyclerView.Adapter<ZEventAdapter.ZEventHold
         @Override
         public void onClick(View itemView) {
             Intent i = new Intent(itemView.getContext(), EditEventActivity.class);
-            //i.putExtra("eventId", zEventList.get(getLayoutPosition()).eventId);
             MyBaseActivity.currEvent = zEventList.get(getLayoutPosition());
             itemView.getContext().startActivity(i);
         }
 
         @Override
         public boolean onLongClick(View itemView) {
-            //Toast.makeText(itemView.getContext(), "LONG CLICK position = " + getLayoutPosition(), Toast.LENGTH_SHORT).show();
             return true;
         }
 
