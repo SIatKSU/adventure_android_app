@@ -16,6 +16,8 @@
         android:focusableInTouchMode="true"
         android:padding="10dp">
 
+
+
         <TextView
             android:id="@+id/triggerWordsLabel"
             android:layout_width="match_parent"

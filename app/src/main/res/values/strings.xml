@@ -54,7 +54,7 @@
     <string name="NewEventActivity">Add New Event</string>
     <string name="EventId">Event #:</string>
     <string name="EventTitle">Event Title</string>
-    <string name="EventTitleHint">Enter optional event title here</string>
+    <string name="EventTitleHint">Enter event title here</string>
     <string name="EventDescriptionHint">Enter event description here</string>
 
     <string name="NoAdventureSelected">No Adventure Selected</string>
@@ -68,12 +68,12 @@
     <string name="DeleteEvent">Delete Event</string>
 
     <string name="AddNextEvent">Add Next Event</string>
-    <string name="TriggerWords">Alexa Trigger Phrase</string>
-    <string name="EnterAlexaTriggerWords">Enter Alexa Trigger Phrase</string>
+    <string name="TriggerWords">Action</string>
+    <string name="EnterAlexaTriggerWords">for example, go left</string>
     <string name="SelectNextEvent">Select Next Event</string>
 
     <string name="AddChildEventActivity">Link To Next Event</string>
-    <string name="SpinnerChooseNextNode">Next Node</string>
+    <string name="SpinnerChooseNextNode">Leads To</string>
     <string name="SelectEventType">Select Event Type</string>
     <string name="EventType">Event Type</string>
 

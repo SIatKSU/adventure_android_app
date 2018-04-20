@@ -65,6 +65,13 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
             mAdventureName.setText(currAdventure.adventureName);
             mAdventureDescription.setText(currAdventure.adventureDescription);
             setAdventureType(currAdventure.adventureType);
+
+            if (currAdventure.adventureType == Constants.FIGHTY_ADVENTURE) {
+                mPlayerHealth.setText(Integer.toString(currAdventure.playerHealth));
+                mMinDamage.setText(Integer.toString(currAdventure.minDamage));
+                mMaxDamage.setText(Integer.toString(currAdventure.maxDamage));
+                mWeaponName.setText(currAdventure.weaponName);
+            }
         }
     }
 
@@ -153,8 +160,12 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
 
                 int adventureType = getAdventureType();
 
+                String playerHealth = null;
+                String weaponName = null;
+                String minDamage = null;
+                String maxDamage = null;
                 if (adventureType == Constants.FIGHTY_ADVENTURE) {
-                    String playerHealth = mPlayerHealth.getText().toString().trim();
+                    playerHealth = mPlayerHealth.getText().toString().trim();
                     if (TextUtils.isEmpty(playerHealth)) {
                         mPlayerHealth.setError("Required.");
                         mPlayerHealth.clearFocus();
@@ -162,7 +173,7 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
                         return;
                     }
 
-                    String weaponName = mWeaponName.getText().toString().trim();
+                    weaponName = mWeaponName.getText().toString().trim();
                     if (TextUtils.isEmpty(weaponName)) {
                         mWeaponName.setError("Required.");
                         mWeaponName.clearFocus();
@@ -170,7 +181,7 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
                         return;
                     }
 
-                    String minDamage = mMinDamage.getText().toString().trim();
+                    minDamage = mMinDamage.getText().toString().trim();
                     if (TextUtils.isEmpty(minDamage)) {
                         mMinDamage.setError("Required.");
                         mMinDamage.clearFocus();
@@ -178,7 +189,7 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
                         return;
                     }
 
-                    String maxDamage = mMaxDamage.getText().toString().trim();
+                    maxDamage = mMaxDamage.getText().toString().trim();
                     if (TextUtils.isEmpty(maxDamage)) {
                         mMaxDamage.setError("Required.");
                         mMaxDamage.clearFocus();
@@ -197,6 +208,13 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
                     currAdventure.adventureName = adventureName;
                     currAdventure.adventureDescription = adventureDescription;
                     currAdventure.adventureType = adventureType;
+                }
+
+                if (adventureType == Constants.FIGHTY_ADVENTURE) {
+                    currAdventure.playerHealth = Integer.parseInt(playerHealth);
+                    currAdventure.minDamage = Integer.parseInt(minDamage);
+                    currAdventure.maxDamage = Integer.parseInt(maxDamage);
+                    currAdventure.weaponName = weaponName;
                 }
 
                 //if currAdventure has no starting event, add one

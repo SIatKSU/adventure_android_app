@@ -134,10 +134,6 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
     public void onStart() {
         super.onStart();
         if (isSignedIn()) {
-
-
-            //FirebaseUser user = auth.getCurrentUser();
-            //tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
         }
     }
 

@@ -21,13 +21,13 @@ public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.
 
     public class ZChildEventHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-        private TextView tvText1, tvText2, tvText3;
+        private TextView tvAction, tvTitle, tvDescription;
 
         public ZChildEventHolder(View itemView) {
             super(itemView);
-            tvText1 = itemView.findViewById(R.id.tvText1);
-            tvText2 = itemView.findViewById(R.id.tvText2);
-            tvText3 = itemView.findViewById(R.id.tvText3);
+            tvAction = itemView.findViewById(R.id.tvAction);
+            tvTitle = itemView.findViewById(R.id.tvTitle);
+            tvDescription = itemView.findViewById(R.id.tvDescription);
 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -36,7 +36,6 @@ public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.
         @Override
         public void onClick(View itemView) {
             Intent i = new Intent(itemView.getContext(), EditLinkToNextEventActivity.class);
-            //i.putExtra("eventId", zEventList.get(getLayoutPosition()).eventId);
             MyBaseActivity.isNewChildEvent = false;
             MyBaseActivity.currChildEvent = zChildEventList.get(getLayoutPosition());
             itemView.getContext().startActivity(i);
@@ -44,7 +43,6 @@ public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.
 
         @Override
         public boolean onLongClick(View itemView) {
-            //Toast.makeText(itemView.getContext(), "LONG CLICK position = " + getLayoutPosition(), Toast.LENGTH_SHORT).show();
             return true;
         }
 
@@ -68,8 +66,6 @@ public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.
                 zChildEventList.add(tempEvent);
             }
         }
-
-        //this.zEventList = zEventList;
     }
 
     @Override
@@ -82,14 +78,13 @@ public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.
     @Override
     public void onBindViewHolder(ZChildEventHolder holder, int position) {
         ZEvent thisEvent = zChildEventList.get(position);
-        //thisEvent.eventId
         try {
-            String text1 = "\"" + zEvent.nextActions.get(position) + "\" -> "
-                    + Integer.toString(thisEvent.eventId) + " " + thisEvent.title;
-            holder.tvText1.setText(text1);
-            String text2 = MyBaseActivity.eventTypes.get(thisEvent.eventType)
-                    + ".  " + thisEvent.description;
-            holder.tvText2.setText(text2);
+            String actionText = zEvent.nextActions.get(position);
+            holder.tvAction.setText(actionText);
+
+            String titleText = Integer.toString(thisEvent.eventId) + " " + thisEvent.title;
+            holder.tvTitle.setText(titleText);
+            holder.tvDescription.setText(thisEvent.description);
         }
         catch (Exception ex) {
             String exceptString = ex.getMessage();
@@ -105,7 +100,4 @@ public class ZChildEventAdapter extends RecyclerView.Adapter<ZChildEventAdapter.
         this.zEvent = zEvent;
         notifyDataSetChanged();
     }
-
-
-
 }

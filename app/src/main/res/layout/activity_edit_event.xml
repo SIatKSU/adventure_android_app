@@ -14,14 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusableInTouchMode="true"
-        android:padding="10dp">
+        android:padding="4dp">
 
         <android.support.constraint.Guideline
             android:id="@+id/guidelineH1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.33" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guidelineV1"
@@ -46,25 +46,26 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:background="#f0f0f0"
+            android:hint="@string/EventTitleHint"
             android:inputType="textPersonName|textCapWords"
             android:lines="1"
             android:maxLength="32"
             android:nextFocusDown="@+id/etDescription"
-            android:textSize="20sp"
             android:paddingLeft="4dp"
-            android:hint="@string/EventTitleHint"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eventTitleLabel" />
 
         <TextView
             android:id="@+id/eventDescriptionLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:paddingLeft="4dp"
             android:text="@string/AdventureDescription"
             android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@id/etEventTitle"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etEventTitle" />
 
         <EditText
             android:id="@+id/etDescription"
@@ -72,26 +73,39 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:background="#f0f0f0"
+            android:hint="@string/EventDescriptionHint"
             android:inputType="textMultiLine|textCapSentences"
-            android:lines="3"
+            android:lines="4"
             android:maxLength="256"
             android:nextFocusDown="@+id/btnSave"
-            android:textSize="20sp"
             android:paddingLeft="4dp"
-            android:hint="@string/EventDescriptionHint"
             android:scrollbars="vertical"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eventDescriptionLabel" />
 
         <TextView
-            android:id="@+id/childNodeRecyclerLabel"
-            android:layout_width="match_parent"
+            android:id="@+id/childActionLabel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
             android:paddingLeft="4dp"
-            android:text="@string/ChildNodes"
+            android:text="Action"
             android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@id/etDescription"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etDescription" />
+
+        <TextView
+            android:id="@+id/childLeadsToLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingLeft="4dp"
+            android:text="Leads To"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guidelineH1"
+            app:layout_constraintTop_toBottomOf="@+id/etDescription" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/mChildNodeRecycler"
@@ -99,7 +113,7 @@
             android:layout_height="0dp"
             android:background="@drawable/rectangleborder"
             android:scrollbars="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/childNodeRecyclerLabel"
+            app:layout_constraintTop_toBottomOf="@+id/childActionLabel"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:listitem="@layout/childevent_list_item"
             />

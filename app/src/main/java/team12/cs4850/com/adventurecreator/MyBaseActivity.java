@@ -73,46 +73,6 @@ public abstract class MyBaseActivity extends AppCompatActivity implements Fireba
         }
     */
 
-    //protected abstract int getMenuResource();
-/*
-    //in each activity, override getMenuResource():
-    @Override
-    protected int getMenuResource() {
-        return R.layout.THE_MENU_RESOURCE_FOR_THIS_ACTIVITY;
-        //return -1 if no menu.
-    }
-*/
-
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-*//*        if (getMenuResource() != -1) {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(getMenuResource(), menu);
-            actionBluetooth = menu.findItem(R.id.action_bluetooth);
-        }*//*
-        return true;
-    }*/
-
-/*    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            //case R.id.action_bluetooth:
-            //    return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
-
-    //override update status in derived class if more specific nextActions required.
-    //protected void updateStatus(String statusString) {
-    //}
-
     protected boolean isSignedIn() {
         return auth.getCurrentUser() != null;
     }
@@ -148,9 +108,6 @@ public abstract class MyBaseActivity extends AppCompatActivity implements Fireba
 
     @Override
     public void onAuthStateChanged(@NonNull FirebaseAuth auth) {
-        //mSendButton.setEnabled(isSignedIn());
-        //mMessageEdit.setEnabled(isSignedIn());
-
         if (isSignedIn()) {
             //attachRecyclerViewAdapter();
         }

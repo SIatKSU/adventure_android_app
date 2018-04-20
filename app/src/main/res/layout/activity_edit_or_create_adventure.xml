@@ -127,6 +127,7 @@
             android:paddingLeft="4dp"
             android:text="Player Health:"
             android:textSize="18sp"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rgAdventureType" />
 
@@ -141,6 +142,7 @@
             android:text="50"
             android:textAlignment="viewStart"
             android:textSize="18sp"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelineH1"
             app:layout_constraintTop_toTopOf="@+id/labelStartingHP" />
@@ -154,6 +156,7 @@
             android:paddingLeft="4dp"
             android:text="Weapon name:"
             android:textSize="18sp"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelStartingHP" />
 
@@ -168,6 +171,7 @@
             android:text="sword"
             android:textAlignment="viewStart"
             android:textSize="18sp"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelineH1"
             app:layout_constraintTop_toTopOf="@+id/labelWeaponName" />
@@ -181,6 +185,7 @@
             android:paddingLeft="4dp"
             android:text="Min Damage:"
             android:textSize="18sp"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelWeaponName" />
 
@@ -195,6 +200,7 @@
             android:text="0"
             android:textAlignment="viewStart"
             android:textSize="18sp"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/guidelineH1"
             app:layout_constraintStart_toEndOf="@+id/labelMinDamage"
             app:layout_constraintTop_toTopOf="@+id/labelMinDamage" />
@@ -207,6 +213,7 @@
             android:paddingLeft="4dp"
             android:text="Max Damage:"
             android:textSize="18sp"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="@+id/guidelineH1"
             app:layout_constraintTop_toBottomOf="@+id/labelWeaponName" />
 
@@ -221,6 +228,7 @@
             android:text="10"
             android:textAlignment="viewStart"
             android:textSize="18sp"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/labelMaxDamage"
             app:layout_constraintTop_toTopOf="@+id/labelMaxDamage" />

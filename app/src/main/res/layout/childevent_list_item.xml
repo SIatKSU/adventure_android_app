@@ -2,58 +2,59 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
     app:cardCornerRadius="5dp"
     app:cardUseCompatPadding="true">
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineH1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.33" />
 
         <TextView
-            android:id="@+id/tvText1"
-            android:layout_width="match_parent"
+            android:id="@+id/tvAction"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="Actions -> EventID"
-            android:maxLines="2"
-            android:textAppearance="?android:attr/textAppearanceListItem"
-            android:textIsSelectable="false"
-            android:textStyle="bold" />
+            android:maxLines="3"
+            android:text="Action"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineH1"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvText2"
-            android:layout_width="match_parent"
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/tvText1"
-            android:text="Type. Title"
-            android:maxLines="2"
-            android:textAppearance="?android:attr/textAppearanceListItem"
-            android:textIsSelectable="false"
-            android:textStyle="bold" />
+            android:maxLines="1"
+            android:text="Leads To Title"
+            app:layout_constraintStart_toStartOf="@+id/guidelineH1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <TextView
-            android:id="@+id/tvText3"
-            android:layout_width="match_parent"
+            android:id="@+id/tvDescription"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/tvText2"
-            android:maxLines="2"
-            android:visibility="gone"
-            android:textAppearance="?android:attr/textAppearanceListItem"
-            android:textIsSelectable="false" />
+            android:maxLines="3"
+            android:text="Leads To Description"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            app:layout_constraintStart_toStartOf="@+id/guidelineH1"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

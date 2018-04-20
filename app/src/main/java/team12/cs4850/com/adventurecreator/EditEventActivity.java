@@ -33,7 +33,17 @@ public class EditEventActivity extends MyBaseActivity {
         childEventRecycler.setHasFixedSize(true);
         LinearLayoutManager myLayoutMgr = new LinearLayoutManager(this);
         childEventRecycler.setLayoutManager(myLayoutMgr);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (isSignedIn()) {
+            setTitle(getString(R.string.EditEvent) + " " + Integer.toString(currEvent.eventId));
+            etEventTitle.setText(currEvent.title);
+            etDescription.setText(currEvent.description);
+            attachRecyclerViewAdapter();
+        }
     }
 
     @Override
@@ -123,37 +133,31 @@ public class EditEventActivity extends MyBaseActivity {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (isSignedIn()) {
-            setTitle(getString(R.string.EditEvent) + " " + Integer.toString(currEvent.eventId));
-            etEventTitle.setText(currEvent.title);
-            etDescription.setText(currEvent.description);
-
-            attachRecyclerViewAdapter();
-        }
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
     }
 
     private boolean okToSave() {
         if (TextUtils.isEmpty(etEventTitle.getText().toString().trim())) {
+            etEventTitle.setError("Required.");
+            etEventTitle.clearFocus();
+            etEventTitle.requestFocus();
+            return false;
+        }
+        etDescription.setError(null);
+
+        if (TextUtils.isEmpty(etDescription.getText().toString().trim())) {
             etDescription.setError("Required.");
             etDescription.clearFocus();
             etDescription.requestFocus();
             return false;
         }
-        else {
-            etDescription.setError(null);
-            return true;
-        }
+
+        etDescription.setError(null);
+        return true;
     }
 
     private void attachRecyclerViewAdapter() {
-
         zChildEventAdapter = new ZChildEventAdapter(currEvent);
         childEventRecycler.setAdapter(zChildEventAdapter);
     }

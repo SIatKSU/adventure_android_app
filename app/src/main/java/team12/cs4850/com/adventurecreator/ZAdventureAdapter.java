@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +28,14 @@ public class ZAdventureAdapter extends RecyclerView.Adapter<ZAdventureAdapter.ZA
     public class ZAdventureHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private TextView mName, mDescription, mDate;
+        private CardView adventureCardView;
 
         public ZAdventureHolder(View itemView) {
             super(itemView);
             mName = itemView.findViewById(R.id.text1);
             mDescription = itemView.findViewById(R.id.text2);
             mDate = itemView.findViewById(R.id.text3);
+            adventureCardView = itemView.findViewById(R.id.adventureCardView);
 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -82,11 +85,12 @@ public class ZAdventureAdapter extends RecyclerView.Adapter<ZAdventureAdapter.ZA
         ZAdventure currAdventure = zAdventureList.get(position);
         holder.mName.setText(currAdventure.adventureName);
         holder.mDescription.setText(currAdventure.adventureDescription);
-        Date dateModified = new Date(currAdventure.dateModified);
+        Date dateModified = new Date(currAdventure.dateCreated);
         SimpleDateFormat spf= new SimpleDateFormat("MMM dd yyyy");
         holder.mDate.setText(spf.format(dateModified));
 
-        holder.itemView.setBackgroundColor(selected_position == position ? selectedColor : Color.TRANSPARENT);
+        //holder.itemView.setBackgroundColor(selected_position == position ? selectedColor : Color.TRANSPARENT);
+        holder.adventureCardView.setCardBackgroundColor(selected_position == position ? selectedColor : Color.TRANSPARENT);
     }
 
     @Override
