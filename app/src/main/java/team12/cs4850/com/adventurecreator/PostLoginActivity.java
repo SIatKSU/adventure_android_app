@@ -64,17 +64,12 @@ public class PostLoginActivity extends MyBaseActivity {
             FirebaseUser user = auth.getCurrentUser();
             tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
 
-            if (eventTypes == null) {
-                eventTypes = loadEventTypes();
-            }
+            //if (eventTypes == null) {
+            //    eventTypes = loadEventTypes();
+            //}
 
             //amazonEmail = MyApplication.savedInfo.getString(Constants.AMAZON_EMAIL, "");
         }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     public void btnClick(View view) {

@@ -40,14 +40,17 @@ public abstract class MyBaseActivity extends AppCompatActivity implements Fireba
     //there is the built-in set, with the possibility of users adding their own custom sets.
     //eventTypes set to null when you logout
     //eventTypes reloaded on login (in PostLoginActivity)
-    static ArrayList<String> eventTypes;
+    //static ArrayList<String> eventTypes;
 
-    static ArrayList<String> loadEventTypes () {
+/*    static ArrayList<String> loadEventTypes () {
         ArrayList<String> myEventTypes = new ArrayList<>();
         //load the built-in types
         myEventTypes.add(Constants.BASIC_EVENT_STRING);
+        myEventTypes.add(Constants.MONSTER_EVENT_STRING);
+        myEventTypes.add(Constants.FORKED_PATH);
+        myEventTypes.add(Constants.DARK_ROOM);
         return myEventTypes;
-    }
+    }*/
 
 
     @Override
@@ -112,7 +115,7 @@ public abstract class MyBaseActivity extends AppCompatActivity implements Fireba
             //attachRecyclerViewAdapter();
         }
         else {
-            eventTypes = null;      //need to reload for each user
+            //eventTypes = null;      //need to reload for each user
             startActivity(new Intent(getBaseContext(), StartActivity.class));
             finish();
             //Toast.makeText(this, R.string.signing_in, Toast.LENGTH_SHORT).show();

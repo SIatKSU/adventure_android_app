@@ -21,8 +21,14 @@ public class ZEvent {
     String description;
     int eventType = 0;          //default, basic ZEvent
 
-    String prevEventKey;          //to go back in the game
+    String monsterName;
+    String weaponName;
+    String monsterPronoun; //its, his, her, their
+    int monsterHealth;
+    int minDamage;
+    int maxDamage;
 
+    String prevEventKey;          //to go back in the game
     ArrayList<Integer> prevEventIds;     //which Nodes call this node?  when a node gets deleted, we also need to remove references to it from calling nodes.
 
     ArrayList<String> nextActions;         //e.g. "go left", "go right", "go center"
@@ -80,9 +86,19 @@ public class ZEvent {
 
 
     @Exclude
-    public int getIndexFromChildEventId(int childEventId) {
+    public int getListIndexFromChildEventId(int childEventId) {
         for (int i = 0; i < nextEventIds.size(); i++) {
             if (nextEventIds.get(i) == childEventId) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Exclude
+    public int getListIndexFromPreviousEventId(int previousEventId) {
+        for (int i = 0; i < prevEventIds.size(); i++) {
+            if (prevEventIds.get(i) == previousEventId) {
                 return i;
             }
         }

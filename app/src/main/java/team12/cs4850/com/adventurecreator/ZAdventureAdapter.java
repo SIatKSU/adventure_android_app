@@ -1,8 +1,6 @@
 package team12.cs4850.com.adventurecreator;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;

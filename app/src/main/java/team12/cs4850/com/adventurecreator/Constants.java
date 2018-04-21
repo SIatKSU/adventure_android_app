@@ -19,6 +19,5 @@ public class Constants {
 
     //Event Types
     public static final int BASIC_EVENT = 0;
-    public static final String BASIC_EVENT_STRING = "Basic Event";
-
+    public static final int MONSTER_EVENT = 1;
 }

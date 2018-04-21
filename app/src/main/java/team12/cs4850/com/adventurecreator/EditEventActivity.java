@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ public class EditEventActivity extends MyBaseActivity {
     //private int eventId;
 
     private EditText etEventTitle, etDescription;
+    private Button btnMonsterInfo;
 
     private RecyclerView childEventRecycler;
     private ZChildEventAdapter zChildEventAdapter;
@@ -29,6 +31,8 @@ public class EditEventActivity extends MyBaseActivity {
         etEventTitle = findViewById(R.id.etEventTitle);
         etDescription = findViewById(R.id.etDescription);
         childEventRecycler = findViewById(R.id.mChildNodeRecycler);
+
+        btnMonsterInfo = findViewById(R.id.btnMonsterInfo);
 
         childEventRecycler.setHasFixedSize(true);
         LinearLayoutManager myLayoutMgr = new LinearLayoutManager(this);
@@ -43,6 +47,13 @@ public class EditEventActivity extends MyBaseActivity {
             etEventTitle.setText(currEvent.title);
             etDescription.setText(currEvent.description);
             attachRecyclerViewAdapter();
+
+            if (currEvent.eventType == Constants.MONSTER_EVENT) {
+                btnMonsterInfo.setVisibility(View.VISIBLE);
+            }
+            else {
+                btnMonsterInfo.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -108,7 +119,7 @@ public class EditEventActivity extends MyBaseActivity {
                                     if ((currEvent.prevEventIds != null) && (currEvent.prevEventIds.size() != 0)) {
                                         for (int zPrevEventId: currEvent.prevEventIds) {
                                             parentEventToUpdate = currAdventure.getEventFromEventListUsingEventId(zPrevEventId);
-                                            index = parentEventToUpdate.nextEventIds.indexOf((Integer) currEvent.eventId);
+                                            index = parentEventToUpdate.nextEventIds.indexOf(currEvent.eventId);
                                             parentEventToUpdate.nextEventIds.remove(index);
                                             parentEventToUpdate.nextActions.remove(index);
                                         }
@@ -130,11 +141,6 @@ public class EditEventActivity extends MyBaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     private boolean okToSave() {
@@ -162,4 +168,16 @@ public class EditEventActivity extends MyBaseActivity {
         childEventRecycler.setAdapter(zChildEventAdapter);
     }
 
+    public void btnClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnMonsterInfo:
+                if (okToSave()) {
+                    currEvent.title = etEventTitle.getText().toString().trim();
+                    currEvent.description = etDescription.getText().toString().trim();
+                    mDatabase.child("adventures").child(currAdventure.adventureKey).child("events").setValue(currAdventure.events);
+                    startActivity(new Intent(EditEventActivity.this, EditMonsterInfoActivity.class));
+                }
+                break;
+        }
+    }
 }

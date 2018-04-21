@@ -17,28 +17,29 @@
         android:padding="10dp">
 
 
-
         <TextView
             android:id="@+id/triggerWordsLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="4dp"
-            android:text="@string/TriggerWords"
-            android:textSize="20sp"
+            android:text="@string/EnterAction"
+            android:textSize="22sp"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteY="185dp" />
+            tools:layout_editor_absoluteX="10dp" />
 
         <EditText
             android:id="@+id/etTriggerWords"
+            android:background="#f0f0f0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:hint="@string/EnterAlexaTriggerWords"
+            android:hint="@string/EnterActionHint"
             android:inputType="text"
             android:lines="1"
             android:maxLength="64"
             android:paddingLeft="4dp"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_constraintTop_toBottomOf="@+id/triggerWordsLabel"
             />
 
@@ -66,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:paddingLeft="4dp"
             android:text="@string/EventType"
             android:textSize="20sp"
@@ -77,10 +78,35 @@
             android:id="@+id/spinnerEventType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:prompt="@string/SelectEventType"
             android:spinnerMode="dialog"
             app:layout_constraintTop_toBottomOf="@+id/tvEventType" />
+
+        <TextView
+            android:id="@+id/eventDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#f0f0f0"
+            android:paddingLeft="4dp"
+            android:text="event description"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerEventType"
+            tools:layout_editor_absoluteX="10dp" />
+
+        <Button
+            android:id="@+id/btnDeleteLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Delete Link"
+            android:layout_marginTop="10dp"
+            android:onClick="btnClick"
+            app:layout_constraintTop_toBottomOf="@+id/eventDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
 
         <Button
             android:id="@+id/btnSave"
@@ -102,11 +128,12 @@
             android:onClick="btnClick"
             android:text="@android:string/cancel"
             android:textSize="18sp"
-            app:layout_constraintTop_toTopOf="@+id/btnSave"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/btnSave"
-            app:layout_constraintStart_toEndOf="@+id/btnSave"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnSave"
+            app:layout_constraintTop_toTopOf="@+id/btnSave" />
 
 
     </android.support.constraint.ConstraintLayout>

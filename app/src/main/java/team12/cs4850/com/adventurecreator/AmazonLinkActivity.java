@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -49,11 +48,6 @@ public class AmazonLinkActivity extends MyBaseActivity {
             FirebaseUser user = auth.getCurrentUser();
             tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
         }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     public void btnClick(View view) {

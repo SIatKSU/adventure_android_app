@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="team12.cs4850.com.adventurecreator.EditOrCreateAdventureActivity">
+    tools:context="team12.cs4850.com.adventurecreator.EditMonsterInfoActivity">
 
     <include layout="@layout/mytoolbar" />
 
@@ -30,70 +30,42 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.24" />
 
-         <TextView
-            android:id="@+id/tvAdventureNameLabel"
+        <TextView
+            android:id="@+id/labelMonster"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="4dp"
-            android:text="@string/AdventureName"
+            android:text="Monster"
             android:textSize="20sp"
             app:layout_constraintTop_toTopOf="parent"
-            />
+            tools:layout_editor_absoluteX="10dp" />
 
         <EditText
-            android:id="@+id/etAdventureName"
+            android:id="@+id/etMonsterName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:background="#f0f0f0"
-            android:hint="@string/AdventureNameHint"
+            android:hint="Enter Monster Name"
             android:inputType="textCapWords"
             android:lines="1"
             android:maxLength="32"
             android:nextFocusDown="@+id/etWeapon"
             android:paddingLeft="4dp"
             android:textSize="22sp"
-            app:layout_constraintTop_toBottomOf="@+id/tvAdventureNameLabel"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/tvAdventureDescriptionLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:paddingLeft="4dp"
-            android:text="@string/AdventureDescription"
-            android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/etAdventureName"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/etWeapon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="#f0f0f0"
-            android:hint="@string/AdventureDescriptionHint"
-            android:imeOptions="actionDone"
-            android:inputType="textMultiLine|textCapSentences"
-            android:lines="4"
-            android:maxLength="256"
-            android:paddingLeft="4dp"
-            android:scrollbars="vertical"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@+id/tvAdventureDescriptionLabel"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelMonster" />
 
         <TextView
             android:id="@+id/pronounLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:paddingLeft="4dp"
-            android:text="@string/AdventureType"
+            android:text="Pronoun"
+            android:layout_marginTop="20dp"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/etWeapon"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etMonsterName" />
 
         <RadioGroup
             android:id="@+id/rgPronoun"
@@ -105,18 +77,33 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <RadioButton
-                android:id="@+id/rbSimple"
+                android:id="@+id/rbHer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Simple" />
+                android:text="her" />
 
             <RadioButton
-                android:id="@+id/rbFighty"
-                android:layout_marginLeft="20dp"
+                android:id="@+id/rbHis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fighty" />
+                android:layout_marginLeft="20dp"
+                android:text="his" />
+
+            <RadioButton
+                android:id="@+id/rbIts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="its" />
+
+            <RadioButton
+                android:id="@+id/rbTheir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="their" />
+
         </RadioGroup>
 
         <TextView
@@ -125,25 +112,25 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:paddingLeft="4dp"
-            android:text="Player Health:"
+            android:text="Monster Health:"
             android:textSize="18sp"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rgPronoun" />
 
         <EditText
-            android:id="@+id/mPlayerHealth"
+            android:id="@+id/mMonsterHealth"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangleborder"
+            android:gravity="start"
             android:inputType="number"
             android:nextFocusDown="@+id/mWidth"
             android:paddingLeft="4dp"
-            android:text="50"
-            android:gravity="start"
+            android:text="15"
             android:textAlignment="viewStart"
             android:textSize="18sp"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelineH1"
             app:layout_constraintTop_toTopOf="@+id/labelMonsterHP" />
@@ -157,7 +144,7 @@
             android:paddingLeft="4dp"
             android:text="Weapon name:"
             android:textSize="18sp"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelMonsterHP" />
 
@@ -166,14 +153,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangleborder"
+            android:gravity="start"
             android:inputType="text"
             android:nextFocusDown="@+id/mWidth"
             android:paddingLeft="4dp"
-            android:text="sword"
-            android:gravity="start"
+            android:text="club"
             android:textAlignment="viewStart"
             android:textSize="18sp"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelineH1"
             app:layout_constraintTop_toTopOf="@+id/labelWeaponName" />
@@ -187,7 +174,7 @@
             android:paddingLeft="4dp"
             android:text="Min Damage:"
             android:textSize="18sp"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelWeaponName" />
 
@@ -196,14 +183,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangleborder"
+            android:gravity="start"
             android:inputType="number"
             android:nextFocusDown="@+id/mWidth"
             android:paddingLeft="4dp"
             android:text="0"
-            android:gravity="start"
             android:textAlignment="viewStart"
             android:textSize="18sp"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="@+id/guidelineH1"
             app:layout_constraintStart_toEndOf="@+id/labelMinDamage"
             app:layout_constraintTop_toTopOf="@+id/labelMinDamage" />
@@ -216,7 +203,7 @@
             android:paddingLeft="4dp"
             android:text="Max Damage:"
             android:textSize="18sp"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="@+id/guidelineH1"
             app:layout_constraintTop_toBottomOf="@+id/labelWeaponName" />
 
@@ -225,44 +212,28 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangleborder"
+            android:gravity="start"
             android:inputType="number"
             android:nextFocusDown="@+id/mWidth"
             android:paddingLeft="4dp"
-            android:text="10"
-            android:gravity="start"
+            android:text="5"
             android:textAlignment="viewStart"
             android:textSize="18sp"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/labelMaxDamage"
             app:layout_constraintTop_toTopOf="@+id/labelMaxDamage" />
 
         <Button
             android:id="@+id/btnSave"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="btnClick"
-            android:text="@string/Next"
-            android:textSize="18sp"
             android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnExit"
-            app:layout_constraintHorizontal_bias="0.5"/>
-
-        <Button
-            android:id="@+id/btnExit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:onClick="btnClick"
-            android:text="@android:string/cancel"
+            android:text="@string/Save"
             android:textSize="18sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/btnSave"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btnSave"
-            app:layout_constraintTop_toTopOf="@+id/btnSave" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>

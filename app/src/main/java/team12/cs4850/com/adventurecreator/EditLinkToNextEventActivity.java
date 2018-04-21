@@ -1,5 +1,6 @@
 package team12.cs4850.com.adventurecreator;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -8,9 +9,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,25 +22,41 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
 
     private static final String TAG = "AddChildEventActivity";
 
-    //private int eventId;
-
     private EditText etTriggerWords;
-    private TextView tvEventType;
+    private TextView tvEventType, tvEventDescription;
     private Spinner spinnerNextNode, spinnerEventType;
+    private Button btnDeleteLink;
 
     private List<String> nextNodeStringList;
     private List<Integer> nextNodeList;
 
     private ZEvent zOrigChildEvent;
 
+    private String[] eventTypes;
+    private String[] eventTypeDescriptions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         etTriggerWords = findViewById(R.id.etTriggerWords);
         spinnerNextNode = findViewById(R.id.spinnerNextNode);
         spinnerEventType = findViewById(R.id.spinnerEventType);
         tvEventType = findViewById(R.id.tvEventType);
+        tvEventDescription = findViewById(R.id.eventDescription);
+
+        btnDeleteLink = findViewById(R.id.btnDeleteLink);
+
+        if (currAdventure.adventureType == Constants.SIMPLE_ADVENTURE) {
+            //monster events not available for simple adventure.
+            eventTypes = getResources().getStringArray(R.array.simpleEventTypes);
+            eventTypeDescriptions = getResources().getStringArray(R.array.simpleDescription);
+        }
+        else {
+            eventTypes = getResources().getStringArray(R.array.eventTypes);
+            eventTypeDescriptions = getResources().getStringArray(R.array.prefabDescription);
+        }
 
         //setup eventTypes spinner
         ArrayAdapter<String> spinnerEventTypeAdapter = new ArrayAdapter<>(this,
@@ -66,17 +85,23 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
         if (isNewChildEvent) {
             spinnerNextNode.setSelection(nextNodeStringList.size() - 1);      //default to create a new node
             tvEventType.setVisibility(View.VISIBLE);
-            spinnerEventType.setVisibility(View.VISIBLE);               //default to create a new node
+            spinnerEventType.setVisibility(View.VISIBLE);
+            tvEventDescription.setText(eventTypeDescriptions[0]);
+            btnDeleteLink.setVisibility(View.GONE);
+
+            if ((currEvent.eventType == Constants.MONSTER_EVENT) &&
+                ((currEvent.nextEventIds == null) || (currEvent.nextEventIds.isEmpty()))) {
+                etTriggerWords.setText("attack");
+            }
         } else {
-            //currChildEvent.eventId
             String triggerWords = currEvent.getTriggerWordsFromChildEventId(currChildEvent.eventId);
             etTriggerWords.setText(triggerWords);
             int spinnerIndex = nextNodeList.indexOf(currChildEvent.eventId);
             spinnerNextNode.setSelection(spinnerIndex);
-
-            tvEventType.setVisibility(View.INVISIBLE);
-            spinnerEventType.setVisibility(View.INVISIBLE);               //default to create a new node
-
+            tvEventType.setVisibility(View.GONE);
+            spinnerEventType.setVisibility(View.GONE);
+            tvEventDescription.setText(currChildEvent.description);
+            btnDeleteLink.setVisibility(View.VISIBLE);
         }
         zOrigChildEvent = currChildEvent;
         if (zOrigChildEvent != null) {
@@ -89,14 +114,8 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
         spinnerNextNode.setOnTouchListener(spinnerListener);
         spinnerNextNode.setOnItemSelectedListener(spinnerListener);
 
-/*        if (nextNodeStringList.size() == 1) {//"Create New Child" Option is only option available
-            spinnerEventType.setVisibility(View.VISIBLE);
-        }
-        else {
-            spinnerEventType.setVisibility(View.INVISIBLE);
-        }*/
-
-
+        spinnerEventType.setOnTouchListener(spinnerListener);
+        spinnerEventType.setOnItemSelectedListener(spinnerListener);
     }
 
     @Override
@@ -107,22 +126,13 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_addchildevent, menu);
-//        menu.findItem(R.id.action_delete).setVisible(false);
-//        if (isNewChildEvent) {
-//            menu.findItem(R.id.action_delete).setVisible(false);
-//        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-//            case R.id.action_save:
-//                tryToSaveChildEvent();
-//                return true;
+            //we do need a way to delete links. not implemented yet though.
             case R.id.action_delete:
                 return true;
             default:
@@ -137,11 +147,6 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
     public void btnClick(View view) {
         switch (view.getId()) {
             case R.id.btnSave:
@@ -149,6 +154,40 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
                 break;
             case R.id.btnExit:
                 finish();
+                break;
+            case R.id.btnDeleteLink:
+                android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(this)
+                        .setTitle("Delete link to next event")
+                        .setMessage(getString(R.string.AreYouSure))
+                        .setCancelable(true)
+                        .setNegativeButton(getString(android.R.string.cancel), null)
+                        .setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                try {
+                                    int nextEventId = nextNodeList.get(spinnerNextNode.getSelectedItemPosition());
+                                    ZEvent nextEvent = currAdventure.getEventFromEventListUsingEventId(nextEventId);
+
+                                    int index = currEvent.getListIndexFromChildEventId(nextEventId);
+                                    currEvent.nextActions.remove(index);
+                                    currEvent.nextEventIds.remove(index);
+                                    int prevIndex = nextEvent.getListIndexFromPreviousEventId(currEvent.eventId);
+                                    nextEvent.prevEventIds.remove(prevIndex);
+
+                                    //saving could be done more efficiently, more targeted - but not going to worry about this for now
+                                    mDatabase.child("adventures").child(currAdventure.adventureKey).setValue(currAdventure);
+                                    Toast.makeText(EditLinkToNextEventActivity.this, "Link removed.", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                                catch (Exception ex) {
+                                    Toast.makeText(EditLinkToNextEventActivity.this, "There was a problem removing this link.", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            }
+                        });
+                android.app.AlertDialog confirmDialog = adb.create();
+                confirmDialog.show();
                 break;
         }
     }
@@ -170,12 +209,24 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
                 switch (parent.getId()) {
                     case R.id.spinnerNextNode:
                         if (pos == nextNodeStringList.size() - 1) {//"Create New Child" Option was picked"
+                            tvEventType.setVisibility(View.VISIBLE);
                             spinnerEventType.setVisibility(View.VISIBLE);
+                            btnDeleteLink.setVisibility(View.GONE);
+
+                            int prefabEventType = spinnerEventType.getSelectedItemPosition();
+                            tvEventDescription.setText(eventTypeDescriptions[prefabEventType]);
                         } else {
-                            spinnerEventType.setVisibility(View.INVISIBLE);
+                            tvEventType.setVisibility(View.GONE);
+                            spinnerEventType.setVisibility(View.GONE);
+                            btnDeleteLink.setVisibility(View.VISIBLE);
+
+                            int nextEventId = nextNodeList.get(pos);
+                            ZEvent nextEvent = currAdventure.getEventFromEventListUsingEventId(nextEventId);
+                            tvEventDescription.setText(nextEvent.description);
                         }
                         break;
                     case R.id.spinnerEventType:
+                        tvEventDescription.setText(eventTypeDescriptions[pos]);
                         break;
                 }
             }
@@ -197,18 +248,26 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
             if (spinnerNextNode.getSelectedItemPosition() == nextNodeStringList.size() - 1) {
                 //linking to a new child
 
-                ZEvent newChildEvent = currAdventure.AddNewEvent(getString(R.string.YourTitleHere), getString(R.string.YourDescriptionHere));
+                ZEvent newChildEvent = currAdventure.AddNewEvent("", "");
+                newChildEvent.eventType = spinnerEventType.getSelectedItemPosition();
+                //if creating a monster, set the event default monster values
+                if (newChildEvent.eventType == Constants.MONSTER_EVENT) {
+                    newChildEvent.monsterName = "troll";
+                    newChildEvent.weaponName = "club";
+                    newChildEvent.monsterPronoun = "his"; //its, his, her, their
+                    newChildEvent.monsterHealth = 15;
+                    newChildEvent.minDamage = 0;
+                    newChildEvent.maxDamage = 5;
+                }
 
                 if (isNewChildEvent) {
                     //creating a new child link
-
                     currEvent.nextActions.add(triggerWords);
                     currEvent.nextEventIds.add(newChildEvent.eventId);
                     newChildEvent.prevEventIds.add(currEvent.eventId);      //add a reference to the parent linking to this node
                 } else {
                     //editing an existing link
-
-                    index = currEvent.getIndexFromChildEventId(zOrigChildEvent.eventId);
+                    index = currEvent.getListIndexFromChildEventId(zOrigChildEvent.eventId);
                     currEvent.nextActions.set(index, triggerWords);
                     currEvent.nextEventIds.set(index, newChildEvent.eventId);
 
@@ -239,7 +298,7 @@ public class EditLinkToNextEventActivity extends MyBaseActivity {
                 } else {
                     //editing an existing link
 
-                    index = currEvent.getIndexFromChildEventId(nextEventId);
+                    index = currEvent.getListIndexFromChildEventId(nextEventId);
                     currEvent.nextActions.set(index, triggerWords);
                     currEvent.nextEventIds.set(index, nextEventId);
 

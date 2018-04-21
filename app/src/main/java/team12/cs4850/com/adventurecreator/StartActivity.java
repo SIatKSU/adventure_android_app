@@ -18,7 +18,7 @@ public class StartActivity extends MyBaseActivity {
     private static final int RC_SIGN_IN = 123;
 
     // Choose authentication providers
-    List<AuthUI.IdpConfig> providers = Arrays.asList(
+    final List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build());
     //new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
     //new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),

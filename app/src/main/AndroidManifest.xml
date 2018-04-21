@@ -57,12 +57,17 @@
             android:parentActivityName=".EventListActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".EditMonsterInfoActivity"
+            android:label="Edit Monster Info"
+            android:launchMode="singleTask"
+            android:parentActivityName=".EditEventActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".EditLinkToNextEventActivity"
             android:label="@string/AddChildEventActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".EditEventActivity"
             android:windowSoftInputMode="adjustPan" />
-
     </application>
 
 </manifest>

@@ -14,25 +14,12 @@
 
     <string name="SignIn">Sign In</string>
     <string name="LoggedInAs">Logged in as:\u0020</string>
-    <string name="CreateAdventure">Create Adventure</string>
-    <string name="ListAdventures">List Adventures</string>
-
-
-    <string-array name="adventureTypeArray">
-        <item>Simple</item>
-        <item>Fighty</item>
-    </string-array>
 
 
     <string name="PostLoginActivity">Adventure Creator</string>
     <string name="action_signout">Sign Out</string>
 
     <string name="SetupProfileTitle">Link to Amazon</string>
-    <string name="Name">Name</string>
-    <string name="NameHint">Enter Name</string>
-    <string name="Password">Password</string>
-    <string name="LinkToAmazonAccount">Link to Amazon Account</string>
-    <string name="AmazonAccountHint">Enter Amazon email address</string>
     <string name="Save">Save</string>
     <string name="AdventureListTitle">Adventure Creator</string>
     <string name="title_activity_create_new_adventure">Create New Adventure</string>
@@ -49,7 +36,6 @@
 
     <string name="ListOfAdventures">Your Adventures:</string>
     <string name="AdventureType">Adventure Type</string>
-    <string name="EnterAdventureType">Choose Your Adventure Type:</string>
 
     <string name="NewEventActivity">Add New Event</string>
     <string name="EventId">Event #:</string>
@@ -68,9 +54,8 @@
     <string name="DeleteEvent">Delete Event</string>
 
     <string name="AddNextEvent">Add Next Event</string>
-    <string name="TriggerWords">Action</string>
-    <string name="EnterAlexaTriggerWords">for example, go left</string>
-    <string name="SelectNextEvent">Select Next Event</string>
+    <string name="EnterAction">Enter Action</string>
+    <string name="EnterActionHint">for example, go left</string>
 
     <string name="AddChildEventActivity">Link To Next Event</string>
     <string name="SpinnerChooseNextNode">Leads To</string>
@@ -78,18 +63,31 @@
     <string name="EventType">Event Type</string>
 
     <string name="CreateNewChildEvent">New Event</string>
-    <string name="ChildNodes">Child Nodes</string>
 
-    <string name="YourTitleHere">Your Title Here</string>
-    <string name="YourDescriptionHere">Your Description Here</string>
-    <string name="ActionLabel">Trigger:</string>
 
     <string name="CantDeleteEventMessage">You can\'t delete events that have children.</string>
     <string name="CantDeleteStartNode">You can\'t delete the starting event.</string>
-
-    <string name="Required">Required</string>
-    <string name="InvalidEmailMessage">Please enter a valid email address</string>
-
-    <string name="PlsLinkAmazonFirstMsg">Please link to your Amazon account first.</string>
     <string name="NoAdventuresFound">No adventures found.  Go ahead and create an adventure!</string>
+
+
+    <string-array name="simpleEventTypes">
+        <item>Basic</item>
+    </string-array>
+
+    <string-array name="simpleDescription">
+        <item>A simple event.</item>
+    </string-array>
+
+
+    <string-array name="eventTypes">
+        <item>Basic</item>
+        <item>Monster</item>
+    </string-array>
+
+    <string-array name="prefabDescription">
+        <item>A simple event.</item>
+        <item>A monster to fight.</item>
+    </string-array>
+
+
 </resources>

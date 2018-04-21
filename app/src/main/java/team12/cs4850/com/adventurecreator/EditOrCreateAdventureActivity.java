@@ -3,15 +3,9 @@ package team12.cs4850.com.adventurecreator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,10 +24,10 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAdventureName = findViewById(R.id.etAdventureName);
-        mAdventureDescription = findViewById(R.id.etAdventureDescription);
-        rgAdventureType = findViewById(R.id.rgAdventureType);
+        mAdventureDescription = findViewById(R.id.etWeapon);
+        rgAdventureType = findViewById(R.id.rgPronoun);
 
-        labelPlayerHealth = findViewById(R.id.labelStartingHP);
+        labelPlayerHealth = findViewById(R.id.labelMonsterHP);
         labelWeaponName = findViewById(R.id.labelWeaponName);
         labelMinDamage = findViewById(R.id.labelMinDamage);
         labelMaxDamage = findViewById(R.id.labelMaxDamage);
@@ -126,12 +120,6 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
         }
     }
 
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
     public void btnClick(View view) {
         switch (view.getId()) {
             case R.id.btnExit:
@@ -164,6 +152,9 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
                 String weaponName = null;
                 String minDamage = null;
                 String maxDamage = null;
+                int minDamageVal = 0;
+                int maxDamageVal = 0;
+
                 if (adventureType == Constants.FIGHTY_ADVENTURE) {
                     playerHealth = mPlayerHealth.getText().toString().trim();
                     if (TextUtils.isEmpty(playerHealth)) {
@@ -196,6 +187,15 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
                         mMaxDamage.requestFocus();
                         return;
                     }
+
+                    minDamageVal = Integer.parseInt(minDamage);
+                    maxDamageVal = Integer.parseInt(maxDamage);
+                    if (maxDamageVal < minDamageVal) {
+                        mMaxDamage.setError("Max Damage cannot be less than Min Damage.");
+                        mMaxDamage.clearFocus();
+                        mMaxDamage.requestFocus();
+                        return;
+                    }
                 }
 
                 String adventureKey;
@@ -212,14 +212,14 @@ public class EditOrCreateAdventureActivity extends MyBaseActivity {
 
                 if (adventureType == Constants.FIGHTY_ADVENTURE) {
                     currAdventure.playerHealth = Integer.parseInt(playerHealth);
-                    currAdventure.minDamage = Integer.parseInt(minDamage);
-                    currAdventure.maxDamage = Integer.parseInt(maxDamage);
+                    currAdventure.minDamage = minDamageVal;
+                    currAdventure.maxDamage = maxDamageVal;
                     currAdventure.weaponName = weaponName;
                 }
 
                 //if currAdventure has no starting event, add one
                 if ((currAdventure.events == null) || (currAdventure.events.size() == 0)) {
-                    currAdventure.events = new ArrayList<ZEvent>();
+                    currAdventure.events = new ArrayList<>();
                     ZEvent startNode = currAdventure.AddNewEvent("Starting event", "Replace with your description");
                 }
                 mDatabase.child("adventures").child(adventureKey).setValue(currAdventure);

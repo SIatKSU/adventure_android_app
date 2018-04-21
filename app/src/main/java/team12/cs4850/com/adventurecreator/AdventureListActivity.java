@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,11 +56,6 @@ public class AdventureListActivity extends MyBaseActivity {
             tvLoggedInAs.setText(getString(R.string.LoggedInAs) + user.getDisplayName());
             attachRecyclerViewAdapter();
         }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     public void btnClick(View view) {
