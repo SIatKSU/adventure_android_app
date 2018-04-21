@@ -8,9 +8,6 @@ import java.util.ArrayList;
  * Created by siatk on 3/6/2018.
  */
 
-//only leaf nodes can be deleted?
-
-
 public class ZEvent {
 
     int eventId;                //1, 2, 3, 4.     0 = starting node.
@@ -28,12 +25,91 @@ public class ZEvent {
     int minDamage;
     int maxDamage;
 
-    String prevEventKey;          //to go back in the game
+    //String prevEventKey;          //to go back in the game
     ArrayList<Integer> prevEventIds;     //which Nodes call this node?  when a node gets deleted, we also need to remove references to it from calling nodes.
+    ArrayList<String> nextActions;       //e.g. "go left", "go right", "go center"
+    ArrayList<Integer> nextEventIds;     //e.g. leftNode, rightNode, centerNode
 
-    ArrayList<String> nextActions;         //e.g. "go left", "go right", "go center"
-    ArrayList<Integer> nextEventIds;    //e.g. leftNode, rightNode, centerNode
 
+    public int getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(int eventType) {
+        this.eventType = eventType;
+    }
+
+    public String getMonsterName() {
+        return monsterName;
+    }
+
+    public void setMonsterName(String monsterName) {
+        this.monsterName = monsterName;
+    }
+
+    public String getWeaponName() {
+        return weaponName;
+    }
+
+    public void setWeaponName(String weaponName) {
+        this.weaponName = weaponName;
+    }
+
+    public String getMonsterPronoun() {
+        return monsterPronoun;
+    }
+
+    public void setMonsterPronoun(String monsterPronoun) {
+        this.monsterPronoun = monsterPronoun;
+    }
+
+    public int getMonsterHealth() {
+        return monsterHealth;
+    }
+
+    public void setMonsterHealth(int monsterHealth) {
+        this.monsterHealth = monsterHealth;
+    }
+
+    public int getMinDamage() {
+        return minDamage;
+    }
+
+    public void setMinDamage(int minDamage) {
+        this.minDamage = minDamage;
+    }
+
+    public int getMaxDamage() {
+        return maxDamage;
+    }
+
+    public void setMaxDamage(int maxDamage) {
+        this.maxDamage = maxDamage;
+    }
 
     public ArrayList<Integer> getPrevEventIds() {
         return prevEventIds;
@@ -41,7 +117,6 @@ public class ZEvent {
     public void setPrevEventIds(ArrayList<Integer> prevEventIds) {
         this.prevEventIds = prevEventIds;
     }
-
     public ArrayList<String> getNextActions() {
         return nextActions;
     }
