@@ -60,10 +60,11 @@
             android:id="@+id/pronounLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:paddingLeft="4dp"
             android:text="Pronoun"
-            android:layout_marginTop="20dp"
             android:textSize="20sp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etMonsterName" />
 
@@ -73,8 +74,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/pronounLabel"
-            app:layout_constraintStart_toStartOf="parent">
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pronounLabel">
 
             <RadioButton
                 android:id="@+id/rbHer"
